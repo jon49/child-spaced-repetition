@@ -19,7 +19,7 @@ if (!defined('BASEDIR')) {
 }
 
 // App Settings
-include(BASEDIR . '/app/app_settings.class.php');
+include(BASEDIR . '/app/app_settings.php');
 
 
 /****************************************
