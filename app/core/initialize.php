@@ -14,7 +14,7 @@ date_default_timezone_set('America/Phoenix');
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
 // Base Directory
-define('BASEDIR', rtrim(getenv('DOCUMENT_ROOT'), '/');
+define('BASEDIR', rtrim(getenv('DOCUMENT_ROOT'), '/'));
 
 // Script Basename
 define('SCRIPT_BASENAME', basename($_SERVER['SCRIPT_FILENAME'], '.php'));
