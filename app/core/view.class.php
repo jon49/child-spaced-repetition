@@ -19,14 +19,12 @@ class View {
 	}
 
 	/**
-	 * Magic Setter
+	 * Set View Value
 	 */
 	public function __set($name, $value) {
-		if ($value instanceof PageView) { 
+		if ($value instanceof View) { 
 			$this->{$name} = $value;
 			$this->vars[$name] = $this->{$name};
-		} else if ($name == 'content') {
-			$this->vars['content'] .= $value; 
 		} else {
 			$this->vars[$name] = $value;
 		}

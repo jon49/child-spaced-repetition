@@ -23,16 +23,15 @@ include(BASEDIR . '/app/app_settings.php');
 
 
 /****************************************
-  CLASS LOADER
+  CORE LIBRARY
 *****************************************/
 
-
-include(BASEDIR . '/app/core/class_loader.class.php');
-ClassLoader::setup();
+include(BASEDIR . '/app/core/core.lib.php');
 
 
 /****************************************
-  ERRORS
+  CLASS LOADER
 *****************************************/
 
-ErrorHandler::setup();
+include(BASEDIR . '/app/core/class_loader.class.php');
+ClassLoader::setup();

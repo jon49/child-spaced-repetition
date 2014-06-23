@@ -14,7 +14,7 @@ class AppController extends BaseController {
 	}
 
 	/**
-	 * Get View
+	 * Set View
 	 */
 	protected function set_view() {
 		$this->view = new View(BASEDIR . '/app/views/main.php');

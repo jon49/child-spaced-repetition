@@ -1,3 +1,6 @@
+/**
+ * Application JS
+ */
 (function() {
 
 })();

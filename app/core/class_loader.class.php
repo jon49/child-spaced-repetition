@@ -32,12 +32,7 @@ class ClassLoader {
 	private function class_file_exists($class) {
 		$paths = explode(PATH_SEPARATOR, get_include_path());
 		foreach ($paths AS $path) {
-
-			// Convert to underscore clase
-			$class = preg_replace('/([A-Z])([A-Z])([a-z])/', '$1_$2$3', $class);
-			$class = preg_replace('/([a-z])([A-Z])/', '$1_$2', $class);
-			$class = strtolower($class);
-
+			$class = camelcase_to_underscore($class);
 			$file = $path . '/' . $class . '.class.php';
 			if (is_file($file)) return $file;
 			
