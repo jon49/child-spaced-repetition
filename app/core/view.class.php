@@ -6,13 +6,13 @@
 class View {
 
 	/**
-	 * Object Variables
+	 * View Data
 	 */
 	private $path;
 	private $vars = Array();
 
 	/**
-	 * Constructor (Set Path)
+	 * Set Path with Constructor
 	 */
 	public function __construct($path) {
 		$this->path = $path;

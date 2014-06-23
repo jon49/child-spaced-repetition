@@ -60,7 +60,7 @@ class Payload {
 		$css = self::$css;
 		if (file_exists($local_css)) {
 			$dirname = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
-			$filename = $dirname . '/' . SCRIPT_FILENAME . '.css?' . date("ymdHis", filemtime($local_css));
+			$filename = $dirname . '/' . SCRIPT_BASENAME . '.css?' . date("ymdHis", filemtime($local_css));
 			$css[] = $filename;
 		}
 
@@ -102,7 +102,7 @@ class Payload {
 		$js = self::$js;
 		if (file_exists($local_js)) {
 			$dirname = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
-			$filename = $dirname . '/' . SCRIPT_FILENAME . '.js?' . date("ymdHis", filemtime($local_js));
+			$filename = $dirname . '/' . SCRIPT_BASENAME . '.js?' . date("ymdHis", filemtime($local_js));
 			$js[] = $filename;
 		}
 
