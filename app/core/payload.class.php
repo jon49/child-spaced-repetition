@@ -42,8 +42,8 @@ class Payload {
 	 */
 	public static function css($filename) {
 		if (!array_key_exists($filename, self::$css)) {
-			if (file_exists(BASEDIR . $filename)) {
-				self::$css[$filename] = $filename . '?' . date("ymdHis", filemtime(BASEDIR . $filename));
+			if (file_exists(ROOT . $filename)) {
+				self::$css[$filename] = $filename . '?' . date("ymdHis", filemtime(ROOT . $filename));
 			}
 		}
 	}
@@ -84,8 +84,8 @@ class Payload {
 	 */
 	public static function js($filename) {
 		if (!array_key_exists($filename, self::$js)) {			
-			if (file_exists(BASEDIR . $filename)) {
-				self::$js[$filename] = $filename . '?' . date("ymdHis", filemtime(BASEDIR . $filename));
+			if (file_exists(ROOT . $filename)) {
+				self::$js[$filename] = $filename . '?' . date("ymdHis", filemtime(ROOT . $filename));
 			}
 		}
 	}

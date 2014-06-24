@@ -17,8 +17,8 @@ class AppController extends BaseController {
 	 * Set View
 	 */
 	protected function set_view() {
-		$this->view = new View(BASEDIR . '/app/views/main.php');
-		$this->view->primary_header = new View(BASEDIR . '/app/views/primary_header.php');
+		$this->view = new View(ROOT . '/app/views/main.php');
+		$this->view->primary_header = new View(ROOT . '/app/views/primary_header.php');
 	}
 
 	/**
