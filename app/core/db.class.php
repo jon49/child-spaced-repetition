@@ -233,7 +233,7 @@ class db extends mysqli {
 	 * Apply in_quotes logic to an array. Note that keys beginning with
 	 * datetime_ will be ommitted automatically.
 	 */
-	public static function array_in_quotes($array, $ommit_keys = Array()) {
+	public static function array_in_quotes($array, $ommit_keys = []) {
 
 		// Loop array and apply in_quotes logic where needed
 		foreach ($array as $key => $value) {

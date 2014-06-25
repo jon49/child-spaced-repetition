@@ -10,7 +10,6 @@ class Controller extends AppController {
 
 		// Create welcome variable in view
 		$this->view->welcome = 'Welcome to MVC';
-
 	}
 
 }
