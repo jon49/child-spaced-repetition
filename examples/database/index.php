@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Init
 include($_SERVER['DOCUMENT_ROOT'] . '/app/core/initialize.php');
