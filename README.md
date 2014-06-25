@@ -24,4 +24,19 @@ Step 3: Use Node to install Bower
 ```sh
 $ npm install -g bower
 ```
-# Once Node and Bower are installed
+# If you want to use SASS
+While node is installed on your system (because of the above steps), you can now use node (and the npm system) to download certain tools for this project. The tools that will be installed are listed in your `package.json` file. Currently that file is setup to install Grunt, Sass, and Autoprefixer. The command to tell node to install those tools for this project is as follows
+```sh
+$ npm install
+```
+Your node modules will now be installed in your `node_modules/` folder. You probably won't need to go in this folder for anything.
+# User Bower to install cool Client-Side tools
+While bower is installed on your system (because of the above steps), you can now use bower to download certain tools for this project. The tools that will be installed are listed in your `bower.json` file. Currently that file is setup to install jQuery, Modernizr, and ReptileForms
+```sh
+$ bower install
+```
+Your bower components will now be installed in your `bower_components` folder.
+
+
+
+
