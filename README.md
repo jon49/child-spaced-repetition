@@ -10,7 +10,7 @@ Step 2: Fix Node. With Ubuntu Step 3 might not work until you do this fix. So tr
 ```sh
 $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 ```
-Step 2: Use Node to install Bower
+Step 3: Use Node to install Bower
 ```sh
 $ sudo npm install -g bower
 ```
