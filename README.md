@@ -47,6 +47,8 @@ extract($controller->view->vars);
 ```
 Since you will only use one controller per page request and each controller will get its own file, it's okay to name all of your controllers: `class Controller`. Notice though that this controller extends from `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` also organizes your views for your project. It knows that you want to use the `main.php` view and it also knows that the `primary_header.php` view goes in the `main.php` view. Further, any output that you do in your controller will be placed in the `main.php` view, in the right spot. 
 
+Each controller can have "Page Specific HTML" by simply doing output outside the `<?php ... ?>` markers.
+
 You will often need to pass variables from the controller to the views. This is done by doing `$this->view->varname` where `$this` is the controller, `$this->view` is the main view,  and `varname` is the varable name in the view. For instance:
 ```php
 $this->view->welcome = 'Welcome to MVC';
@@ -56,6 +58,36 @@ This will pass a variable called `$welcome` to the `main.php` view.
 $this->view->primary_header->welcome = 'Welcome Student!';
 ```
 This however, will pass a variable called `$welcome` to the `primary_header.php` view. Note that these two variables called `$welcome` do not collide with each other since each view will be in its own scope.
+
+With these respective views you would just need to do a php echo for the variable as this sample view implies:
+```php
+<h3><?php echo $welcome; ?></h3>
+```
+
+### Page Specific Content
+
+One extra note: All output from the controller is captured and placed in a varialbe called `$main_content`. You will see this variable being echo'ed in the `main.php` view. Further, if you want to pass variables from the controller to the "Page Specific Output" at the bottom of the controller's page, then you will also need to use `$this->view->...`. For example, if you wanted to pass a variable called $welcome to the "Page Specific Ouput" then the following would serve as a good example:
+
+```php
+<?php
+
+// Controller
+class Controller extends AppController {
+	public function init() {
+		$this->view->welcome = 'Welcome to MVC';
+	}
+}
+$controller = new Controller();
+
+// Extract Main Controler Vars
+extract($controller->view->vars);
+
+?>
+
+<h3><?php echo $welcome; ?></h3>
+```
+
+
 
 
 
