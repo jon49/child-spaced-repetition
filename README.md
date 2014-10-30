@@ -73,11 +73,11 @@ Also note that the Auto Quotes will do escaping for you.
 What if you want a MySQL function to be applied to a column such as the `NOW()` function? In this case we don't want to pass `'NOW()'` to MySQL, we want to pass `NOW()`. So when we use the `db::auto_quote()` method above, you'll notice we can pass an array as a second argument. The purpose of this optional second argument (array) is to supply a list of key names we don't want the Auto Quote logic to apply to.
 
 ## Update
-Updates work almost exactly like Inserts but with a third argument passed to the `db::update()` method:
+Updates work almost exactly like Inserts but with a third argument passed:
 ```php
 db::update('user', $insert_values, "WHERE user_id = '1'");
 ```
-The third method allows you to write the SQL's `WHERE` statement. Be sure to also do `db::auto_quote()` on values before they're passed in.
+The third argument of `db::update()` allows you to write the SQL's `WHERE` statement. Be sure to also do `db::auto_quote()` on values before they're passed in.
 
 # MVC
 All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
