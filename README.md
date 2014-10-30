@@ -1,14 +1,19 @@
 # Bootcamp MVC
 The bootcamp MVC framework is intended to give the students a simple MVC starting point to develop their in-class projects with. This guide will help you navigate your way through the framework and learn its technique.
 
-# /app
-All of your Models, Views, and Controllers will be created in a the /app folder (in the respective models, views, and controllers folder). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows
+# Database Setup.
+Modify the constants in the file `/app/app_settings.php` to reflect your database credentials. Some of the example code provided for you depends on a `user` table existing in that database. You can use the `/database.sql` SQL file to create that table. Note that you can change this table as needed but the examples might depend on the original schema of this table
+
+# Organization and Naming Classes
+All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
 ```php
 // Notice the name of the class UserProduct in title-case
 class UserProduct extends Model {
   ...
 }
 ```
+The name of the file needs to be the same as the class name but with underscore-naming and with .class.php at the end such as: `user_product.class.php` 
+
 
 
 
