@@ -136,7 +136,7 @@ $insert_values = [
 ```
 What if the `$_POST['first_name']` has no value? You might think that the Auto Quote method would produce `''`. But what we want for MySQL is `NULL`. Auto Quote takes care of that for you and chooses `NULL`.
 
-What if you want a MySQL function to be applied to a column such as the `NOW()` function? In this case we don't want to pass `'NOW()'` to MySQL, we want to pass `NOW()`. So when we use the `db::auto_quote()` method above, you'll notice we can pass an array as a second argument of keys we don't want the Auto Quote logic applied to
+What if you want a MySQL function to be applied to a column such as the `NOW()` function? In this case we don't want to pass `'NOW()'` to MySQL, we want to pass `NOW()`. So when we use the `db::auto_quote()` method above, you'll notice we can pass an array as a second argument which is an array. The purpose of that optional second argument is to supply a list of key names we don't want the Auto Quote logic to apply to.
 
 
 
