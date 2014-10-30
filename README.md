@@ -26,7 +26,7 @@ To prevent SQL Injection Attacks, variables should always be cleansed before you
 
 
 ```php
-$user_id = db::escape($_GET['user_id]);
+$user_id = db::escape($_GET['user_id']);
 
 // SQL
 $sql = "
