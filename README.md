@@ -25,19 +25,15 @@ Controllers are the end-points for your application to communicate with clients 
 ```php
 Router::add('/', '/app/controllers/home.php');
 ```
-This router is saying that home page request should go to the `/app/controllers/home.php` controller. Now lets look at that file:
+This router is saying that home page request should go to the `/app/controllers/home.php` controller. Now lets look at that file. The file below isn't the home controller, but it is an example of minimum required of any controller
 ```php
 <?php
 
 // Controller
 class Controller extends AppController {
-	public function __construct() {
-		parent::__construct();
-
-		// Create welcome variable in view
-		$this->view->welcome = 'Welcome to MVC';
+	public function init() {
+		// Page code goes here
 	}
-
 }
 $controller = new Controller();
 
@@ -46,7 +42,8 @@ extract($controller->view->vars);
 
 ?>
 
-<h1><?php echo $welcome; ?></h1>
+<!-- Page specific HTML goes here -->
+
 ```
 Since you will only use one controller per page request and each controller will get its own file, it's okay to name all of your controllers: `class Controller`. Notice though that this controller extends from `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` also organizes your views for your project. It knows that you want to use the `main.php` view and it also knows that the `primary_header.php` view goes in the `main.php` view. Further, any output that you do in your controller will be placed in the `main.php` view, in the right spot
 
