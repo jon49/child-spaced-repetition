@@ -1,41 +1,66 @@
-# Installation
-> You will need Node and Bower installed in order to make using this framework easy
+# Bootcamp MVC
+The bootcamp MVC framework is intended to give the students a simple MVC starting point to develop their in-class projects with. This guide will help you navigate your way through the framework and learn its technique.
 
-## Bower for Ubuntu Users
-Step 1: Install Node
+# Database Setup.
+Modify the constants in the file `/app/app_settings.php` to reflect your database credentials. Some of the example code provided for you depends on a `user` table existing in that database. You can use the `/database.sql` SQL file to create that table. Note that you can change this table as needed but the examples might depend on the original schema of this table
+
+# Organization and Naming Classes
+All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
+```php
+// Notice the name of the class UserProduct in title-case
+class UserProduct extends Model {
+  ...
+}
+```
+The name of the file needs to be the same as the class name but with underscore-naming and with .class.php at the end such as: `user_product.class.php` 
+
+
+
+
+
+
+# NPM, Gulp, Sass, and Bower
+To use this MVC framework you may want to take advantage of NPM (Node Package Manager), Bower, Gulp, and Sass. All of these things are optional and you can create a project with this framework without these tools. However, these tools are AWESOME and will make your life easier with development.
+
+## NPM for Ubuntu
+Install Node
 ```sh
 $ sudo apt-get install nodejs
 ```
-Step 2: Fix Node. With Ubuntu Step 3 might not work until you do this fix. So try Step 3 first, then if it doesn't work, do Step 2 then Step 3
+Fix Node. With Ubuntu Step 3 might not work until you do this fix. So try Step 3 first, then if it doesn't work, do Step 2 then Step 3
 ```sh
 $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 ```
-Step 3: Use Node to install Bower
-```sh
-$ sudo npm install -g bower
-```
 
-## Bower for OSX Users
-Step 1: Install Homebrew (a similar tool to Ubuntu's apt-get)
+## NPM for OSX
+Install Homebrew (a similar tool to Ubuntu's apt-get)
 ```sh
 sudo ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 ```
-Step 2: Use Homebrew to install Node
+Use Homebrew to install Node
 ```sh
 $ brew install node
 ```
-Step 3: Use Node to install Bower
-```sh
-$ sudo npm install -g bower
-```
-# If you want to use SASS
-While node is installed on your system (because of the above steps), you can now use node (and the npm system) to download certain tools for this project. The tools that will be installed are listed in your `package.json` file. Currently that file is setup to install Grunt, Sass, and Autoprefixer. The command to tell node to install the tools listed in the package file is:
+
+## NPM Usage
+Having NPM installed allows you to use already-made Node applications (called Modules) on your project. Your project will store the Node Modules in folder called `node_modeules`. The instructions for installing node modules are written in a file called `package.json`. To install the Node Modules issue the following bash command:
 ```sh
 $ npm install
 ```
-Your node modules will now be installed in your `node_modules/` folder. You probably won't need to go in this folder for anything.
-# User Bower to install cool Client-Side tools
-While bower is installed on your system (because of the above steps), you can now use bower to download certain tools for this project. The tools that will be installed are listed in your `bower.json` file. Currently that file is setup to install jQuery, Modernizr, and ReptileForms. The command to tell bower to install the tools listed in the bower file is:
+
+## Using Gulp and Sass
+Assuming you installed NPM in the previous steps, you can now use Gulp to watch for Sass changes. Run the following command in bash
+```sh
+$ gulp
+```
+Issuing this command tells gulp to follow the instructions in the `gulpfile.js`. That file instructs Gulp to watch for changes to any `.scss` files in the `/css` folder and to turn them into `.css` files. As long as your Gulp program is running, this CSS transformation will take place. You can turn off the Gulp watch script by typing CTRL+C
+
+## Bower
+Assuming you installed NPM in the previous steps, you can now install Bower globally on your computer with the following command:
+```sh
+$ sudo npm install -g bower
+```
+Where NPM will install Node Modules into a foler, Bower will install Bower Components into a folder called `bower_components`. And just like doing `npm install` will look in the `package.json` for what to install, Bower will look in `bower.json` to see what it needs to install. In this case we will be installing jQuery, Modernizr, and ReptileForms. The command to tell bower to install the tools listed in the bower file is:
 ```sh
 $ bower install
 ```
