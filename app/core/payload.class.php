@@ -9,8 +9,8 @@ class Payload {
 	 * Payload Variables
 	 */
 	private static $settings;
-	private static $css = Array();
-	private static $js = Array();
+	private static $css = [];
+	private static $js = [];
 
 
 	/****************************************

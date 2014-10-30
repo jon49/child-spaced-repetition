@@ -6,7 +6,7 @@
 abstract class Model {
 	
 	// Store Model Data
-	private $model = Array();
+	private $model = [];
 
 
 	/****************************************
@@ -25,8 +25,8 @@ abstract class Model {
 		return print_r($this->model, TRUE);
 	}
 
-	public function is_empty() {
-		return empty($this->model);
+	public function exists() {
+		return !empty($this->model);
 	}
 
 

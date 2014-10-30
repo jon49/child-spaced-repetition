@@ -1,8 +1,5 @@
 <?php
 
-// Init
-include($_SERVER['DOCUMENT_ROOT'] . '/app/core/initialize.php');
-
 // Controller
 class Controller extends AppController {
 	public function __construct() {
@@ -32,7 +29,6 @@ extract($controller->view->vars);
 
 ?>
 
-<h1></h1>
 <div class="users">
 	<?php echo $users; ?>
 </div>

@@ -170,7 +170,7 @@ class db extends mysqli {
 		$sql_values = array_filter($sql_values);
 		
 		// Set ommit keys to an array no matter what
-		$ommit_keys = is_array($ommit_keys) ? $ommit_keys : Array();
+		$ommit_keys = is_array($ommit_keys) ? $ommit_keys : [];
 
 		// Remove Omitted Keys
 		$sql_values_light = array_diff_key($sql_values, array_flip($ommit_keys));
@@ -253,7 +253,7 @@ class db extends mysqli {
 	 * the associative key
 	 */
 	public static function results_to_array($mysqli_results_object, $column_as_value, $column_as_key = NULL) {
-		$results_array = Array();
+		$results_array = [];
 		while ($row = $mysqli_results_object->fetch_assoc()) {
 			if (!empty($column_as_key)) {
 				$results_array[$row[$column_as_key]] = $row[$column_as_value];

@@ -1,8 +1,5 @@
 <?php
 
-// Init
-include($_SERVER['DOCUMENT_ROOT'] . '/app/core/initialize.php');
-
 // Controller
 class Controller extends AppController {
 	public function __construct() {

@@ -9,7 +9,7 @@ class View {
 	 * View Data
 	 */
 	private $path;
-	private $vars = Array();
+	private $vars = [];
 
 	/**
 	 * Set Path with Constructor

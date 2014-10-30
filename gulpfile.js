@@ -4,13 +4,10 @@ var prefix = require('gulp-autoprefixer');
 
 // Sass
 gulp.task('sass', function () {
-
-  // App
   gulp.src('./css/**/*.scss')
     .pipe(sass())
     .pipe(prefix("last 1 version", "> 1%", "ie 8", "ie 7"))
     .pipe(gulp.dest('./css'));
-
 });
 
 // Rerun the task when a file changes
