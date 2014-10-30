@@ -4,6 +4,61 @@ The bootcamp MVC framework is intended to give the students a simple MVC startin
 # Database Setup.
 Modify the constants in the file `/app/app_settings.php` to reflect your database credentials. Some of the example code provided for you depends on a `user` table existing in that database. You can use the `/database.sql` SQL file to create that table. Note that you can change this table as needed but the examples might depend on the original schema of this table
 
+# SQL Statements
+
+The `db` object allows you to pass SQL statements and it returns a [mysqli result](http://php.net/manual/en/class.mysqli-result.php) object as seen below:
+
+```php
+$user_id = 1;
+
+// SQL
+$sql = "
+	SELECT *
+	FROM user
+	WHERE user_id = '{$user_id}'
+	";
+
+// Execute
+$results = db::execute($sql);
+```
+
+## Insert
+Insert statements can be made by using `db::insert()` with a table name and an associative array:
+
+```php
+$insert_values = [
+	'first_name' => 'John',
+	'last_name' => 'Smith',
+	'email' => 'john@smith.com',
+	'datetime_added' => 'NOW()'
+];
+
+$insert_values = db::auto_quote($insert_values, ['datetime_added']);
+
+// Insert
+$results = db::insert('user', $insert_values);
+
+// The results object given to us after the insert will have certain
+// qualities that we might want, such as the recent Insert ID
+$user_id = $results->insert_id;
+```
+Notice that before the associative array is ready for SQL, we need to apply a method called `db::auto_quote()` to the associative array. The Auto Quote method will prepare any values by adding quotes to it. For instance if we want to insert a value called `John`, what we really need is `'John'` (with the single quotes around it). That's what Auto Quote will do. But let's say we pass a varialbe into our associative array and the value of that variable might be null such as:
+```php
+$insert_values = [
+	'first_name' => $_POST['first_name']
+];
+```
+What if the `$_POST['first_name']` has no value? You might think that the Auto Quote method would produce `''`. But what we want for MySQL is `NULL`. Auto Quote takes care of that for you and chooses `NULL`.
+
+What if you want a MySQL function to be applied to a column such as the `NOW()` function? In this case we don't want to pass `'NOW()'` to MySQL, we want to pass `NOW()`. So when we use the `db::auto_quote()` method above, you'll notice we can pass an array as a second argument which is an array. The purpose of that optional second argument is to supply a list of key names we don't want the Auto Quote logic to apply to.
+
+## Update
+Updates work almost exactly like Inserts but with a third argument passed to the `db::update()` method:
+```php
+db::update('user', $insert_values, "WHERE user_id = '1'");
+```
+The third method allows you to write the SQL's `WHERE` statement. Be sure to also do `db::auto_quote()` on values before they're passed in.
+
 # MVC
 All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
 ```php
@@ -90,53 +145,6 @@ extract($controller->view->vars);
 ## Models
 
 ...
-
-
-# Database
-
-The `db` object allows you to pass SQL statements and it returns a [mysqli result](http://php.net/manual/en/class.mysqli-result.php) object as seen below:
-
-```php
-$user_id = 1;
-
-// SQL
-$sql = "
-	SELECT *
-	FROM user
-	WHERE user_id = '{$user_id}'
-	";
-
-// Execute
-$results = db::execute($sql);
-```
-Insert statements can be made by using `db::insert()` with a table name and an associative array:
-
-```php
-$insert_values = [
-	'first_name' => 'John',
-	'last_name' => 'Smith',
-	'email' => 'john@smith.com',
-	'datetime_added' => 'NOW()'
-];
-
-$insert_values = db::auto_quote($insert_values, ['datetime_added']);
-
-// Insert
-$results = db::insert('user', $insert_values);
-
-// The results object given to us after the insert will have certain
-// qualities that we might want, such as the recent Insert ID
-$user_id = $results->insert_id;
-```
-Notice that before the associative array is ready for SQL, we need to apply a method called `db::auto_quote()` to the associative array. The Auto Quote method will prepare any values by adding quotes to it. For instance if we want to insert a value called `John`, what we really need is `'John'` (with the single quotes around it). That's what Auto Quote will do. But let's say we pass a varialbe into our associative array and the value of that variable might be null such as:
-```php
-$insert_values = [
-	'first_name' => $_POST['first_name']
-];
-```
-What if the `$_POST['first_name']` has no value? You might think that the Auto Quote method would produce `''`. But what we want for MySQL is `NULL`. Auto Quote takes care of that for you and chooses `NULL`.
-
-What if you want a MySQL function to be applied to a column such as the `NOW()` function? In this case we don't want to pass `'NOW()'` to MySQL, we want to pass `NOW()`. So when we use the `db::auto_quote()` method above, you'll notice we can pass an array as a second argument which is an array. The purpose of that optional second argument is to supply a list of key names we don't want the Auto Quote logic to apply to.
 
 
 
