@@ -45,7 +45,17 @@ extract($controller->view->vars);
 <!-- Page specific HTML goes here -->
 
 ```
-Since you will only use one controller per page request and each controller will get its own file, it's okay to name all of your controllers: `class Controller`. Notice though that this controller extends from `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` also organizes your views for your project. It knows that you want to use the `main.php` view and it also knows that the `primary_header.php` view goes in the `main.php` view. Further, any output that you do in your controller will be placed in the `main.php` view, in the right spot
+Since you will only use one controller per page request and each controller will get its own file, it's okay to name all of your controllers: `class Controller`. Notice though that this controller extends from `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` also organizes your views for your project. It knows that you want to use the `main.php` view and it also knows that the `primary_header.php` view goes in the `main.php` view. Further, any output that you do in your controller will be placed in the `main.php` view, in the right spot. 
+
+You will often need to pass variables from the controller to the views. This is done by doing `$this->view->varname` where `$this` is the controller, `$this->view` is the main view,  and `varname` is the varable name in the view. For instance:
+```php
+$this->view->welcome = 'Welcome to MVC';
+```
+This will pass a variable called `$welcome` to the `main.php` view. 
+```php
+$this->view->primary_header->welcome = 'Welcome Student!';
+```
+This however, will pass a variable called `$welcome` to the `primary_header.php` view. Note that these two variables called `$welcome` do not collide with each other since each view will be in its own scope.
 
 
 
