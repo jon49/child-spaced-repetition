@@ -1,4 +1,13 @@
-# NPM, Gulp, and Bower
+# Bootcamp MVC
+The bootcamp MVC framework is intended to give the students a simple MVC starting point to develop their in-class projects with.
+
+
+
+
+
+
+
+# NPM, Gulp, Sass, and Bower
 To use this MVC framework you may want to take advantage of NPM (Node Package Manager), Bower, Gulp, and Sass. All of these things are optional and you can create a project with this framework without these tools. However, these tools are AWESOME and will make your life easier with development.
 
 ## NPM for Ubuntu
