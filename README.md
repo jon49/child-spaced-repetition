@@ -1,7 +1,14 @@
 # Bootcamp MVC
-The bootcamp MVC framework is intended to give the students a simple MVC starting point to develop their in-class projects with.
+The bootcamp MVC framework is intended to give the students a simple MVC starting point to develop their in-class projects with. This guide will help you navigate your way through the framework and learn its technique.
 
-
+# /app
+All of your Models, Views, and Controllers will be created in a the /app folder (in the respective models, views, and controllers folder). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows
+```php
+// Notice the name of the class UserProduct in title-case
+class UserProduct extends Model {
+  ...
+}
+```
 
 
 
