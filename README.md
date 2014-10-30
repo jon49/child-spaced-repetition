@@ -70,7 +70,7 @@ What if the `$_POST['first_name']` has no value? You might think that the Auto Q
 
 Also note that the Auto Quotes will do escaping for you.
 
-What if you want a MySQL function to be applied to a column such as the `NOW()` function? In this case we don't want to pass `'NOW()'` to MySQL, we want to pass `NOW()`. So when we use the `db::auto_quote()` method above, you'll notice we can pass an array as a second argument which is an array. The purpose of that optional second argument is to supply a list of key names we don't want the Auto Quote logic to apply to.
+What if you want a MySQL function to be applied to a column such as the `NOW()` function? In this case we don't want to pass `'NOW()'` to MySQL, we want to pass `NOW()`. So when we use the `db::auto_quote()` method above, you'll notice we can pass an array as a second argument. The purpose of this optional second argument (array) is to supply a list of key names we don't want the Auto Quote logic to apply to.
 
 ## Update
 Updates work almost exactly like Inserts but with a third argument passed to the `db::update()` method:
