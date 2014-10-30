@@ -22,6 +22,24 @@ $sql = "
 $results = db::execute($sql);
 ```
 
+To prevent SQL Injection Attacks, variables should always be cleansed before you place them into an SQL statement by doing escaping. In the above example, we didn't escape the $user_id but that's because we are sure the value is equal to `1`. If there's even a small chance that the value you want to pass into your SQL statement contains data that the user could have influenced, then you need to do escaping as follows:
+
+
+```php
+$user_id = db::escape($_GET['user_id]);
+
+// SQL
+$sql = "
+	SELECT *
+	FROM user
+	WHERE user_id = '{$user_id}'
+	";
+
+// Execute
+$results = db::execute($sql);
+```
+In this case the `user_id` came from the HTTP/GET request and therefore it cannot be trusted. Escaping the value before we put it in the SQL statement will make it safe.
+
 ## Insert
 Insert statements can be made by using `db::insert()` with a table name and an associative array:
 
@@ -42,7 +60,7 @@ $results = db::insert('user', $insert_values);
 // qualities that we might want, such as the recent Insert ID
 $user_id = $results->insert_id;
 ```
-Notice that before the associative array is ready for SQL, we need to apply a method called `db::auto_quote()` to the associative array. The Auto Quote method will prepare any values by adding quotes to it. For instance if we want to insert a value called `John`, what we really need is `'John'` (with the single quotes around it). That's what Auto Quote will do. But let's say we pass a varialbe into our associative array and the value of that variable might be null such as:
+Notice that before the associative array is ready for SQL, we need to apply a method called `db::auto_quote()` to the associative array. The Auto Quote method will prepare any values by adding quotes to it (including escaping). For instance if we want to insert a value called `John`, what we really need is `'John'` (with the single quotes around it). That's what Auto Quote will do. But let's say we pass a varialbe into our associative array and the value of that variable might be null such as:
 ```php
 $insert_values = [
 	'first_name' => $_POST['first_name']
