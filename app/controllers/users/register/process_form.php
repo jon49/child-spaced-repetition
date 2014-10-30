@@ -2,8 +2,7 @@
 
 // Controller
 class Controller extends AjaxController {
-	public function __construct() {
-		parent::__construct();
+	public function init() {
 
 		// Save User
 		$user = User::insert($_POST);

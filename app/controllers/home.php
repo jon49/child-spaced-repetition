@@ -2,13 +2,15 @@
 
 // Controller
 class Controller extends AppController {
-	public function __construct() {
-		parent::__construct();
-
-		// Create welcome variable in view
+	public function init() {
+		
+		// Send a variable to the main view
 		$this->view->welcome = 'Welcome to MVC';
-	}
 
+		// Send a variable to a sub view
+		$this->view->primary_header->welcome = 'Welcome Student!';
+
+	}
 }
 $controller = new Controller();
 
@@ -17,4 +19,5 @@ extract($controller->view->vars);
 
 ?>
 
-<h1><?php echo $welcome; ?></h1>
+<!-- Notice this welcome variable was created above and passed into the view -->
+<h3><?php echo $welcome; ?></h3>

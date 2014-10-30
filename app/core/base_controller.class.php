@@ -8,14 +8,14 @@ abstract class BaseController {
 	/**
 	 * Controller View
 	 */
-	public $view = 'set_view() needs to assign a variable to $view';
-	abstract protected function set_view();
+	public $view;
+	abstract protected function set_views();
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->set_view();
+		$this->set_views();
 	}
 
 	/**

@@ -2,16 +2,9 @@
 
 // Controller
 class Controller extends AppController {
-	public function __construct() {
-		parent::__construct();
-
-		// Add Files Payload
-		Payload::js('/examples/register/register.js');
-		Payload::css('/bower_components/ReptileForms/dist/reptileforms.min.css');
+	public function init() {
 
 		// More code could go here depending on what you want to do with this page
-
-
 
 	}
 

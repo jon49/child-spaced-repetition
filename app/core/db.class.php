@@ -213,7 +213,7 @@ class db extends mysqli {
 	 * $value parameter is pass-by-reference so this function can 
 	 * be used as a callback for array_walk.
 	 */
-	public static function in_quotes($value) {
+	public static function quote_val($value) {
 
 		// Cast Boolean False
 		$value = ($value === FALSE) ? '0' : $value;
@@ -233,12 +233,12 @@ class db extends mysqli {
 	 * Apply in_quotes logic to an array. Note that keys beginning with
 	 * datetime_ will be ommitted automatically.
 	 */
-	public static function array_in_quotes($array, $ommit_keys = []) {
+	public static function auto_quote($array, $ommit_keys = []) {
 
 		// Loop array and apply in_quotes logic where needed
 		foreach ($array as $key => $value) {
-			if (!in_array($key, $ommit_keys) && substr($key, 0, strlen('datetime_')) != 'datetime_') {
-				$array[$key] = self::in_quotes($value);
+			if (!in_array($key, $ommit_keys)) {
+				$array[$key] = self::quote_val($value);
 			}
 		}
 		

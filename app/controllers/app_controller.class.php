@@ -11,12 +11,13 @@ class AppController extends BaseController {
 	public function __construct() {
 		parent::__construct();
 		ob_start();
+		$this->init();
 	}
 
 	/**
 	 * Set View
 	 */
-	protected function set_view() {
+	protected function set_views() {
 		$this->view = new View(ROOT . '/app/views/main.php');
 		$this->view->primary_header = new View(ROOT . '/app/views/primary_header.php');
 	}

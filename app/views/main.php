@@ -7,10 +7,8 @@
 	<title>Page Title</title>
 	
 	<!-- Main CSS -->
+	<link rel="stylesheet" href="/bower_components/ReptileForms/dist/reptileforms.min.css">
 	<link rel="stylesheet" href="/css/styles.css">
-
-	<!-- Payload CSS -->
-	<?php echo Payload::get_css(); ?>
 
 	<!-- Modernizr -->
 	<script src="/bower_components/modernizr/modernizr.js"></script>
@@ -29,7 +27,6 @@
 
 	<!-- Get JS -->
 	<script>var app = {};app.settings=<?php echo Payload::get_settings(); ?>;</script>
-	<?php echo Payload::get_js(); ?>
 	
 	<!-- Main JS -->
 	<script src="/js/main.js"></script>
