@@ -4,7 +4,7 @@ The bootcamp MVC framework is intended to give the students a simple MVC startin
 # Database Setup.
 Modify the constants in the file `/app/app_settings.php` to reflect your database credentials. Some of the example code provided for you depends on a `user` table existing in that database. You can use the `/database.sql` SQL file to create that table. Note that you can change this table as needed but the examples might depend on the original schema of this table
 
-# Organization and Naming Classes
+# MVC
 All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
 ```php
 // Notice the name of the class UserProduct in title-case
@@ -14,7 +14,40 @@ class UserProduct extends Model {
 ```
 The name of the file needs to be the same as the class name but with underscore-naming and with .class.php at the end such as: `user_product.class.php` 
 
+## Views
+Views are how your organize your application's hierarchy of HTML templates. Your views will be located under `/app/views` and you will see some views there by default. Feel free to make as many views as you need for your project. The views are PHP files with mostly HTML content and since they're not classes, they do not follow the naming convention we mentioned before. The `main.php` view where you should look first. It is the main view that will hold all other views. You will notice a lot of work done here for you, but feel free to modify as needed. We'll talk more about how to organize views when we talk about controllers
 
+## Routers
+Routes are organized in a file called `/router.php`. Routes controll which URL paths go to which controllers. Open that file for examples which are already in place.
+
+## Controllers
+Controllers are the end-points for your application to communicate with clients (for normal page requests and for AJAX requests). Your controllers will be located under `/app/controllers`. You may have noticed there was a route in the router file that looked like this:
+```php
+Router::add('/', '/app/controllers/home.php');
+```
+This router is saying that home page request should go to the `/app/controllers/home.php` controller. Now lets look at that file:
+```php
+<?php
+
+// Controller
+class Controller extends AppController {
+	public function __construct() {
+		parent::__construct();
+
+		// Create welcome variable in view
+		$this->view->welcome = 'Welcome to MVC';
+	}
+
+}
+$controller = new Controller();
+
+// Extract Main Controler Vars
+extract($controller->view->vars);
+
+?>
+
+<h1><?php echo $welcome; ?></h1>
+```
 
 
 
