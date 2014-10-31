@@ -9,14 +9,6 @@ abstract class BaseController {
 	 * Controller View
 	 */
 	public $view;
-	abstract protected function set_views();
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$this->set_views();
-	}
 
 	/**
 	 * Render

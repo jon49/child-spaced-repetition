@@ -9,17 +9,9 @@ class AppController extends BaseController {
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct();
+		$this->view = new DefaultView();
 		ob_start();
 		$this->init();
-	}
-
-	/**
-	 * Set View
-	 */
-	protected function set_views() {
-		$this->view = new View(ROOT . '/app/views/main.php');
-		$this->view->primary_header = new View(ROOT . '/app/views/primary_header.php');
 	}
 
 	/**
