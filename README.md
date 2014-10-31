@@ -92,8 +92,13 @@ class UserProduct extends Model {
 ```
 The filename in this case would be `user_product.class.php` where the filename must be the class name (but with underscore case) and must have `.class.php` as it's extension
 
-## Views
-Views are how your organize your application's hierarchy of HTML templates. Your views will be located under `/app/views` and you will see some views there by default. Feel free to make as many views as you need for your project. The views are PHP files with mostly HTML content and since they're not classes, they do not follow the naming convention we mentioned before. The `main.php` view where you should look first. It is the main view that will hold all other views. You will notice a lot of work done here for you, but feel free to modify as needed. We'll talk more about how to organize views when we talk about controllers
+## Views & Templates
+
+Views are how your organize your application's hierarchy of HTML Templates. Your views will be located under `/app/views` and you will see the default view there. Feel free to make as many views as you need for your project. 
+
+Views make references to Templates which are located under `/app/templates`. Templates are PHP files with mostly HTML content and since they're not classes, they do not follow the naming convention we mentioned before. The `main.php` template is where you should look first. It is the main template that will hold all other templates. You will notice a lot of work done here for you, but feel free to modify as needed. 
+
+Views work by nesting `View` objects within each other. Each `View` object must contain the path to one template. We will learn more about how Controllers use views later in this document.
 
 ## Routers
 Routes are organized in a file called `/router.php`. Routes controll which URL paths go to which controllers. Open that file for examples which are already in place.
