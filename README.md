@@ -80,6 +80,8 @@ The third argument of `db::update()` allows you to write the SQL's `WHERE` state
 
 ## db::insert_duplicate_key_update(`table`, `values`);
 
+This method will attempt an INSERT statement but if the statement fails due to the key already existing, then the statement turns into an UPDATE statement.
+
 # MVC
 All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
 ```php
