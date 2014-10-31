@@ -24,7 +24,6 @@ $results = db::execute($sql);
 
 To prevent SQL Injection Attacks, variables should always be cleansed before you place them into an SQL statement by doing escaping. In the above example, we didn't escape the $user_id but that's because we are sure the value is equal to `1`. If there's even a small chance that the value you want to pass into your SQL statement contains data that the user could have influenced, then you need to do escaping as follows:
 
-
 ```php
 $user_id = db::escape($_GET['user_id']);
 
