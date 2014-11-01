@@ -239,7 +239,16 @@ $user = new User($user_id);
 echo $user->first_name; // Outputs "Lindsey"
 ```
 
-Notice how we can instantiate a new User object by passing in the User ID. By doing this the Model will perform the nessesary SQL statement to get all the information about User:1. If you used the `database.sql` file to start your database, then you'll have a user table already with two users inserted. 
+Notice how we can instantiate a new User object by passing in the User ID. By doing this the Model will perform the nessesary SQL statement to get all the information about User:1. If you used the `database.sql` file to start your database then you'll have a user table already with two users inserted. 
+
+The User Model we created can opperate with no methods to get user information as we just saw. However you should add methods to your models as nessesary for your application. Methods inside of Models should serve to perform operations on the Model data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model
+
+### Updating
+
+
+
+
+### Inserting
 
 
 
