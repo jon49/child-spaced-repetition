@@ -275,7 +275,7 @@ public function init() {
 	// Validate the $_POST data first
 
 	// Get the User ID from the $_POST
-	$user_id = $_POST['user_id];
+	$user_id = $_POST['user_id'];
 	
 	// Start a new User Object
 	$user = new User($user_id);
