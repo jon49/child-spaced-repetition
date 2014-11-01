@@ -219,11 +219,19 @@ class User extends Model {
 ```
 
 ### Naming
-Models directly correspond to database tables and are required to be named similarly to their respective table. Database tables should be named with all lowercase and underscore's for spaces. Models are the same but Title-Case and without spaces. For instance a table name of `user_products` would require it's Model to be named `UserProducts`
+Models directly correspond to database tables and are required to be named similarly to their respective table. Database tables should be named with all lowercase and underscore's for spaces. Models are the same but with Title-Case and without spaces. For instance a table name of `user_product` would require it's Model to be named `UserProduct`.
+
+The Model will anticipate that the name of the Primary ID on the table is the same as the table name, but with `_id` added. So for instance the `user_product` table should have a Primary ID of `user_product_id`. However this can be easily overriden by providing a custom Primary ID:
+
+```php
+class UserProduct extends Model {
+	protected static $table_id = 'id';
+}
+```
 
 ### Usage
 
-Just by merit of extending the `Model` class, this User Model is already very powerful. With no methods created whatsoever, we can do this with our User Model:
+Just by merit of extending the `Model` class, your Model is already very powerful. With no methods created whatsoever, we can do this with our User Model we created in the first example:
 
 ```php
 $user_id = 1;
