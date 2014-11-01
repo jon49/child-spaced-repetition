@@ -83,29 +83,14 @@ The third argument of `db::update()` allows you to write the SQL's `WHERE` state
 This method will attempt an INSERT statement but if the statement fails due to the key already existing, then the statement turns into an UPDATE statement.
 
 # MVC
-All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
+All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). The framework has an Auto Loading feature which means you won't need to manually include classes that exist in the `/app` folder. But in order for it to work files must follow a specific naming convention. Each file should have one class and it's class name needs to be title-case as follows:
 ```php
 // Notice the name of the class UserProduct in title-case
 class UserProduct extends Model {
   ...
 }
 ```
-The filename in this case would be `user_product.class.php` where the filename must be the class name (but with underscore case) and must have `.class.php` as it's extension
-
-## Views & Templates
-
-Views are how your organize your application's hierarchy of HTML Templates. Your views will be located under `/app/views` and you will see the default view there. Feel free to make as many views as you need for your project. 
-
-Views make references to Templates which are located under `/app/templates`. Templates are PHP files with mostly HTML content and will be loaded by the Views directly (without the Auto Loader) so they do not follow the naming convention we mentioned before. 
-
-
-
-The `main.php` template is where you should look first. It is the main template that will hold all other templates. You will notice a lot of work done here for you, but feel free to modify as needed. 
-
-
-
-
-Views work by nesting `View` objects within each other. Each `View` object must contain the path to one template. We will learn more about how Controllers use views later in this document.
+The filename must match the class name expect it will need underscore case such as `user_product.class.php`. Note the `.class.php` as it's extension.
 
 ## Routers
 Routes are organized in a file called `/router.php`. Routes map URL paths to controllers. To map a path, call the `add()` method and pass an HTTP path followed by the path to the controller. The following example shows how to setup three paths.
@@ -118,8 +103,11 @@ Router::add('/users/register', '/app/controllers/users/register/form.php');
 
 With these routes, if someone navigates to `www.example.com`, the `home.php` controller will take the request. Likewise if the user visits `www.example.com/users`, the `list.php` controller will take the request.
 
+> Note that in order for the router to take effect, we cannot have a real file located at the path that we expect the router to control. For instance we cannot have a real file at `/users`. When there is a conflict between having a real file exist and having a router path, the real file will load and not the router.
+
 ## Controllers
-Controllers are the end-points for your application to communicate with clients (for all page requests including AJAX requests). Your controllers will be located under `/app/controllers`. This file exemplifies the general code for most of your controllers:
+Controllers are the end-points for your application's HTTP requests. Even though most HTTP requests will go through the Router, the Router only serves to point to the correct Controller. Your controllers will be located under `/app/controllers`. This file shows how a basic controller works:
+
 ```php
 <?php
 
@@ -137,11 +125,42 @@ extract($controller->view->vars);
 ?>
 
 <!-- Page specific HTML goes here -->
-
 ```
+
 Since controllers are included by the router and not the Auto Loader, the class name doesn't need to match the filename. So naming your contollers `class Controller` is okay. The purpose of the controller is to organize the page-specific code including orchestrating Models and Views.
 
-All controllers should extend some higher level controller, in this case it's `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. 
+All controllers should extend some higher level controller, in this case we're extending `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` in this case sets up views and renders the views for you automatically. We'll talk about how controllers work with views later in this document.
+
+## Views & Templates
+
+Your application needs a way of organizing HTML templates for reuse. Views exist to organize your HTML templates into a hierarchy. And where templates consist of mostly HTML, Views also serve to provide the programming logic for it's respected template. Each View will be associated with just one template.
+
+
+
+
+
+Views are how you organize your application's hierarchy of HTML Templates. Your Views will be located under `/app/views` and you will see the default View there. Where Templates consist of mostly HTML, views are the logic behind that HTML. Each View will 
+
+
+
+Views make references to Templates which are located under `/app/templates`. Templates are PHP files with mostly HTML content and will be loaded by the Views directly (without the Auto Loader) so they do not follow the naming convention we mentioned before. 
+
+
+
+The `main.php` template is where you should look first. It is the main template that will hold all other templates. You will notice a lot of work done here for you, but feel free to modify as needed. 
+
+
+
+
+Views work by nesting `View` objects within each other. Each `View` object must contain the path to one template. We will learn more about how Controllers use views later in this document.
+
+
+
+
+
+
+
+
 
 Your controller will have access to the `View` object through a variable called `$this->view`. The `View` Object will give you access to that view's respective template. You can pass variables to a view's template as follows:
 
@@ -156,6 +175,20 @@ Note that passing variables to `$this->view` will make those variables available
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- controllers --
 
 
 You will often need to pass variables from the controller to the views. This is done by doing `$this->view->varname` where `$this` is the controller, `$this->view` is the main view,  and `varname` is the varable name in the view. For instance:
