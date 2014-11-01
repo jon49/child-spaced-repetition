@@ -59,7 +59,7 @@ $results = db::insert('user', $insert_values);
 // qualities that we might want, such as the recent Insert ID
 $user_id = $results->insert_id;
 ```
-Notice that before the associative array is ready for SQL, we need to apply a method called `db::auto_quote()` to the associative array. The Auto Quote method will prepare any values by adding quotes to it. For instance if we want to insert a value called `John`, what we really need is `'John'` (with the single quotes around it). That's what Auto Quote will do. But let's say we pass a varialbe into our associative array and the value of that variable might be null such as:
+Notice that before the associative array is ready for SQL, we need to apply a method called `db::auto_quote()` to the associative array. The Auto Quote method will prepare any values by adding quotes to it. For instance if we want to insert a value called `John`, what we really need is `'John'` (with the single quotes around it). That's what Auto Quote will do. But let's say we pass a variable into our associative array and the value of that variable might be null such as:
 ```php
 $insert_values = [
 	'first_name' => $_POST['first_name']
@@ -119,7 +119,7 @@ class Controller extends AppController {
 }
 $controller = new Controller();
 
-// Extract Main Controler Vars
+// Extract Main Controller Vars
 extract($controller->view->vars);
 
 ?>
@@ -129,26 +129,26 @@ extract($controller->view->vars);
 
 > Note that you will need an `init()` method in your Controller. This method will be called when the Controller Starts. This method should hold your page-specific code.
 
-Since controllers are included by the router and not the Auto Loader, the class name doesn't need to match the filename. So naming your contollers `class Controller` is okay. The purpose of the controller is to organize the page-specific code including orchestrating Models and Views.
+Since controllers are included by the router and not the Auto Loader, the class name doesn't need to match the filename. So naming all your Controllers `class Controller` is okay. The purpose of the Controller is to organize the page-specific code including orchestrating Models and Views.
 
-All controllers should extend some higher level controller, in this case we're extending `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` in this case sets up views and renders the views for you automatically. We'll talk about how Controllers work with Views later in this document.
+All Controllers should extend some higher level Controller, in this case we're extending `AppController`. This means that your code has a ton of features built into the Controller without you having to do extra work. The `AppController` in this case sets up Views and renders the Views for you automatically. We'll talk about how Controllers work with Views later in this document.
 
 ## Views / Templates
 
-Your application needs a way of organizing HTML templates for reuse. Views exist to organize your HTML templates into a hierarchy. While templates mostly consist of HTML, Views also serve to provide the programming logic for it's respected template (each View will be associated with just one template).
+Your application needs a way of organizing HTML Templates for reuse. Views exist to organize your HTML Templates into a hierarchy and to provide programming logic for the View's Template. Views are PHP objects and each View corresponds to one Template. The Templates are PHP files but mostly consist of HTML.
 
-Views and Templates will exist under `/app/views` and `/app/templates` respectively. You will notice a Default View and some templates already setup for you. These are meant to be customized depending on your application's needs but serve as starting points to help you learn how Views and Templates work. By explpring the Default View, you will notice it associates itself with the `master.php` Template and then it creates Sub Views within itself. This is how the hierarchy is created. When the Default View gets rendered, it will also render all of its Sub Views.
+Views and Templates will exist under `/app/views` and `/app/templates` respectively. You will notice a Default View and some templates already setup for you. These are meant to be customized depending on your application's needs but also serve as starting points to help you learn how Views and Templates work. By exploring the Default View, you will notice it associates itself with the `master.php` Template and then it creates Sub Views within itself. This is how the hierarchy is created. When the Default View gets rendered, it will also render all of its Sub Views.
 
-If you open the `master.php` Template, you will notice a place where it outputs the contents of the `primary_header.php` Template. You will also notice were it outputs the contents of the a variable called `$main_content`. The Main Content variable will consist of "page specific content" for each page. Let's explpore how Controllers work with Views and how to make "page specific content" in the next section.
+If you open the `master.php` Template, you will notice a place where it outputs the contents of the `primary_header.php` Template. You will also notice were it outputs the contents of the a variable called `$main_content`. The Main Content variable will consist of "page specific content" for each page. Let's explore how Controllers work with Views and how to make "page specific content" in the next section.
 
-## Controllers and Views
+## Controllers with Views
 
 Your Controller will have access to the Default View's hierarchy through a variable called `$this->view`. This variable is provided by `AppController`. 
 
 You can send variables from the Controller to the View/Sub View objects as follows:
 
 ```php
-// Pass a varialbe called 'foo' into the Master Template
+// Pass a variable called 'foo' into the Master Template
 $this->view->foo = 'hello';
 
 // Pass a variable called 'bar' to the Primary Header Template
@@ -176,7 +176,7 @@ class Controller extends AppController {
 }
 $controller = new Controller();
 
-// Extract Main Controler Vars
+// Extract Main Controller Vars
 extract($controller->view->vars);
 
 ?>
@@ -186,7 +186,7 @@ extract($controller->view->vars);
 
 Since any output from the controller gets turned into the `$main_content` variable on the `master.php` Template, you can see here that our `$main_content` will consist of an `<h1>` tag. But also notice that in order to pass information from the `init()` method of our Controller down into the output, we also have to use `$this->view` as well.
 
-## Router to Controller to View
+## Lifecycle (Router to Controller to View)
 
 Now that we've talked about these parts in detail, let's review how they all work together.
 
@@ -214,14 +214,14 @@ class Controller extends AppController {
 Where Routers, Controllers, and Views all work to create the output; Models serve as a middle layer between the Controllers and the Database. Models are saved in `/app/models` and are created as classes that extend the `Model` class:
 
 ```php
-class User extends Model {
+class UserProduct extends Model {
 }
 ```
 
 ### Naming
-Models directly correspond to database tables and are required to be named similarly to their respective table. Database tables should be named with all lowercase and underscore's for spaces. Models are the same but with Title-Case and without spaces. For instance a table name of `user_product` would require it's Model to be named `UserProduct`.
+Models directly correspond to database tables and are required to be named similarly to their respective table. Database tables should be named in underscore-case. Models should be the same name but with title-case. For instance a table name of `user_product` should have a Model named `UserProduct`.
 
-The Model will anticipate that the name of the Primary ID on the table is the same as the table name, but with `_id` added. So for instance the `user_product` table should have a Primary ID of `user_product_id`. However this can be easily overriden by providing a custom Primary ID:
+The Model will anticipate that the name of the Primary ID on the table is the same as the table name, but with `_id` added. So for instance the `user_product` table should have a Primary ID of `user_product_id`. However this can be easily overridden by providing a custom Primary ID:
 
 ```php
 class UserProduct extends Model {
@@ -231,7 +231,14 @@ class UserProduct extends Model {
 
 ### Usage
 
-Just by merit of extending the `Model` class, your Model is already very powerful. With no methods created whatsoever, we can do this with our User Model we created in the first example:
+For the next few examples, lets assume this `User` Model:
+
+```php
+class User extends Model {
+}
+```
+
+Just by merit of extending the `Model` class, your Model is already very powerful. With no methods created whatsoever, we can start a new `$user` object that will automatically contain the user's information as properties:
 
 ```php
 $user_id = 1;
@@ -239,9 +246,9 @@ $user = new User($user_id);
 echo $user->first_name; // Outputs "Lindsey"
 ```
 
-Notice how we can instantiate a new User object by passing in the User ID. By doing this the Model will perform the nessesary SQL statement to get all the information about User:1. If you used the `database.sql` file to start your database then you'll have a user table already with two users inserted. 
+Notice how we can instantiate a new User object by passing in the User ID. By doing this the Model will perform the necessary SQL statement to get all the information about User:1. If you used the `database.sql` file to start your database then you'll have a user table already with two users inserted. 
 
-The User Model we created can opperate with no methods to get user information as we just saw. However you should add methods to your Models as nessesary for your application. Methods inside of Models should serve to perform operations on the Model data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model
+Our Model currently has no methods but is already powerful. However you should add methods to your Models as necessary for your application. Methods inside of Models should serve to perform operations on the Model's data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model.
 
 #### Updating
 
@@ -264,26 +271,26 @@ public function update($input) {
 }
 ```
 
-Based on previous documentation, you should be familiar with how to use the `db` object to do an UPDATE statement. Notice that this method takes an associative array for `$input`. Each input variable corresponds to a database field. This pattern isn't required but just serves as an example.
+Based on previous documentation, you should be familiar with how to use the `db` object to do an UPDATE statement. Notice that this method takes an associative array for `$input`. Each input variable corresponds to a database field. This pattern for doing an update method isn't required but just serves as an example.
 
-Imagine we have an `init()` method of a Controller. Also imagine that this controller receives a form request. This example shows how to use the `update` method we just created:
+The Controller's `init()` method is where you page logic goes. Imagine a Controller that receives a form request. This example shows the `init()` method of the Controller and how it might use the `update()` method of our Model:
 
 ```php
-...
-public function init() {
-
-	// Validate the $_POST data first
-
-	// Get the User ID from the $_POST
-	$user_id = $_POST['user_id'];
+class Controller extends AppController {
+	public function init() {
 	
-	// Start a new User Object
-	$user = new User($user_id);
+		// Validate the $_POST data first
 	
-	// Update the User
-	$user = $user->update($_POST);
+		// Get the User ID from the $_POST
+		$user_id = $_POST['user_id'];
+		
+		// Start a new User Object
+		$user = new User($user_id);
+		
+		// Update the User
+		$user = $user->update($_POST);
+	}
 }
-...
 ```
 > Note that our `update` method returns a new instance of the user were already working on. This pattern isn't required but might be useful since we are updating the user, which means the `$user` Model on the Controller will be inconsistent with the new database information. Therefore if we start a new version of the User object and return it, our controller will have its `$user` Model up-to-date.
 
