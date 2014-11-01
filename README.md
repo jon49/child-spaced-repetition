@@ -211,9 +211,27 @@ class Controller extends AppController {
 
 ## Models
 
-...
+Where Routers, Controllers and Views all work to create the output, Models serve as a middle layer between the Controllers and the Database. Models are saved in `/app/models` and are created as classes that extend the `Model` class:
 
+```php
+class User extends Model {
+}
+```
 
+### Naming
+Models directly correspond to database tables and are required to be named similarly to their respective table. Database tables should be named with all lowercase and underscore's for spaces. Models are the same but Title-Case and without spaces. For instance a table name of `user_products` would require it's Model to be named `UserProducts`
+
+### Usage
+
+Just by merit of extending the `Model` class, this User Model is already very powerful. With no methods created whatsoever, we can do this with our User Model:
+
+```php
+$user_id = 1;
+$user = new User($user_id);
+echo $user->first_name; // Outputs "Lindsey"
+```
+
+Notice how we can instantiate a new User object by passing in the User ID. By doing this the Model will perform the nessesary SQL statement to get all the information about User:1. If you used the `database.sql` file to start your database, then you'll have a user table already with two users inserted. 
 
 
 
