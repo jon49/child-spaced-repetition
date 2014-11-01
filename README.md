@@ -188,19 +188,20 @@ Since any output from the controller gets turned into the `$main_content` variab
 
 Now that we've talked about these parts in detail, let's review how they all work together.
 
-1.  The `/router.php` file takes control of the HTTP request. Let's say the user visited `www.example.com`. Since the router has this line of code, the `home.class.php` Controller will start up
+*First,*  the `/router.php` file takes control of the HTTP request. Let's say the user visited `www.example.com`. Since the router has this line of code, the `home.class.php` Controller will start up
 
 ```php
 Router::add('/', '/app/controllers/home.php');
 ```
 
-2. The Home Controller starts and extends the `AppController`:
+*Second,* the Home Controller starts and extends the `AppController`:
 
 ```php
 class Controller extends AppController {
 ...
 ```
 
+*Third,* the `AppController`
 
 
 
