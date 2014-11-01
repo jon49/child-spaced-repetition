@@ -314,7 +314,7 @@ class Controller extends AppController {
 
 Notice this Controller looks just like our update version but instead of starting a `$user` object, it calls insert statically. Also notice that we can have that method return an instance of the newly created user similarly to how the `update()` method did in the previous example.
 
-
+<hr>
 
 # NPM, Gulp, Sass, and Bower
 To use this MVC framework you may want to take advantage of NPM (Node Package Manager), Bower, Gulp, and Sass. All of these things are optional and you can create a project with this framework without these tools. However, these tools are AWESOME and will make your life easier with development.
