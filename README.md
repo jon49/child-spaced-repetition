@@ -367,6 +367,7 @@ $ bower install
 ```
 Your bower components will now be installed in your `bower_components` folder.
 
+## Reptile Forms
 
-
+The MVC framework showcases a registration form to create users. This registration form uses ReptileForms to implement Client-Side validation and basic form styles. Reptile Forms will be installed when you issue the `$ bower install` command. Using Reptile Forms requires configuration which is currently at `/js/main.js`. For more information, visit the [ReptileForms documentation](https://github.com/bradwestfall/ReptileForms)
 
