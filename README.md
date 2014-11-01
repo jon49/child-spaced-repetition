@@ -101,7 +101,16 @@ Views make references to Templates which are located under `/app/templates`. Tem
 Views work by nesting `View` objects within each other. Each `View` object must contain the path to one template. We will learn more about how Controllers use views later in this document.
 
 ## Routers
-Routes are organized in a file called `/router.php`. Routes controll which URL paths go to which controllers. Open that file for examples which are already in place.
+Routes are organized in a file called `/router.php`. Routes controll which URL paths go to which controllers. The Router class works by .......
+
+```php
+Router::add('/', '/app/controllers/home.php');
+Router::add('/users', '/app/controllers/users/list.php');
+Router::add('/users/register', '/app/controllers/users/register/form.php');
+```
+
+
+
 
 ## Controllers
 Controllers are the end-points for your application to communicate with clients (for normal page requests and for AJAX requests). Your controllers will be located under `/app/controllers`. You may have noticed there was a route in the router file that looked like this:
