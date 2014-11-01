@@ -184,7 +184,12 @@ extract($controller->view->vars);
 
 Since any output from the controller gets turned into the `$main_content` variable on the `master.php` Template, you can see here that our `$main_content` will consist of an `<h1>` tag. But also notice that in order to pass information from the `init()` method of our Controller down into the output, we also have to use `$this->view` as well.
 
+## Router to Controller to View
 
+Now that we've talked about these parts in detail, let's review how they all work together.
+
+1. sdf
+2. sdf
 
 
 
