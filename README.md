@@ -285,7 +285,7 @@ public function init() {
 }
 ...
 ```
-> Note that our `update` method returns a new instance of the user were already working on. This pattern isn't required but might be useful since we are updating the user, which means the User Model will be inconsistent with the new database information. Therefore if we start a new version of the User object and return it, our controller will have its `$user` model up-to-date.
+> Note that our `update` method returns a new instance of the user were already working on. This pattern isn't required but might be useful since we are updating the user, which means the `$user` Model on the Controller will be inconsistent with the new database information. Therefore if we start a new version of the User object and return it, our controller will have its `$user` model up-to-date.
 
 #### Inserting
 
