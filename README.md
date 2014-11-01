@@ -90,10 +90,10 @@ class UserProduct extends Model {
   ...
 }
 ```
-The filename must match the class name expect it will need underscore case such as `user_product.class.php`. Note the `.class.php` as it's extension.
+The filename must match the class name expect it will need underscore-case such as `user_product.class.php`. Note the `.class.php` as it's extension.
 
 ## Routers
-Routes are organized in a file called `/router.php`. Routes map URL paths to controllers. To map a path, call the `add()` method and pass an HTTP path followed by the path to the controller. The following example shows how to setup three paths.
+The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests that are for files that don't exist, to go to the router located at `/router.php`. To create a route, call the `add()` method and pass a URL path followed by the path to the controller. The following example shows how to setup three routes.
 
 ```php
 Router::add('/', '/app/controllers/home.php');
@@ -103,7 +103,7 @@ Router::add('/users/register', '/app/controllers/users/register/form.php');
 
 With these routes, if someone navigates to `www.example.com`, the `home.php` controller will take the request. Likewise if the user visits `www.example.com/users`, the `list.php` controller will take the request.
 
-> Note that in order for the router to take effect, we cannot have a real file located at the path that we expect the router to control. For instance we cannot have a real file at `/users`. When there is a conflict between having a real file exist and having a router path, the real file will load and not the router.
+> Note that in order for the routes to work, we cannot have a real file located at the URL path. For instance we cannot have a real file at `/users`. When there is a conflict between having a real file exist and having a route path, the real file will load and prevent the router from loading entirely.
 
 ## Controllers
 Controllers are the end-points for your application's HTTP requests. Even though most HTTP requests will go through the Router, the Router only serves to point to the correct Controller. Your controllers will be located under `/app/controllers`. This file shows how a basic controller works:
