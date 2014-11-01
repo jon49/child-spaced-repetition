@@ -135,7 +135,7 @@ All Controllers should extend some higher level Controller, in this case we're e
 
 ### Ajax Controllers
 
-If you wish to perform an AJAX request, you'll need your application to implement an `AjaxController` instead of an `AppController`. The AJAX controller works almost the same except the `$this-view` will refer to an associative array instead of a View Object. Adding variables to this array will turn into a JSON response when the scripe dies.
+If you wish to perform an AJAX request, you'll need your application to implement an `AjaxController` instead of an `AppController`. The AJAX controller works almost the same except the `$this->view` will refer to an associative array instead of a View Object. Adding variables to this array will turn into a JSON response when the script dies.
 
 ## Views / Templates
 
