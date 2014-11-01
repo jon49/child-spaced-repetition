@@ -3,15 +3,13 @@
 /**
  * App Controller
  */
-class AppController extends BaseController {
+abstract class AppController extends BaseController {
 
 	/**
-	 * Constructor
+	 * Set View
 	 */
-	public function __construct() {
-		ob_start();
+	protected function set_view() {
 		$this->view = new DefaultView();
-		$this->init();
 	}
 
 	/**

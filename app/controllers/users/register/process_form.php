@@ -2,7 +2,11 @@
 
 // Controller
 class Controller extends AjaxController {
-	public function init() {
+	protected function init() {
+
+		// Validate First
+
+		
 
 		// Save User
 		$user = User::insert($_POST);

@@ -2,7 +2,7 @@
 
 // Controller
 class Controller extends AppController {
-	public function init() {
+	protected function init() {
 		
 		// Send a variable to the main view
 		$this->view->welcome = 'Welcome to MVC';
@@ -14,7 +14,7 @@ class Controller extends AppController {
 }
 $controller = new Controller();
 
-// Extract Main Controler Vars
+// Extract Main Controller Vars
 extract($controller->view->vars);
 
 ?>

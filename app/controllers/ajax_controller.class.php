@@ -3,7 +3,7 @@
 /**
  * Ajax Controller
  */
-class AjaxController extends AppController {
+abstract class AjaxController extends AppController {
 
 	/**
 	 * Set View: The view for this controller will be an array and will be

@@ -2,7 +2,7 @@
 
 // Controller
 class Controller extends AppController {
-	public function init() {
+	protected function init() {
 
 		// More code could go here depending on what you want to do with this page
 
@@ -16,7 +16,7 @@ extract($controller->view->vars);
 
 ?>
 
-<form class="reptile-form" action="process_form.php">
+<form class="reptile-form" action="process_form">
 	<input type="text" name="first_name" title="First Name" required>
 	<input type="text" name="last_name" title="Last Name" required>
 	<input type="email" name="email" title="Email" required maxlength="100">

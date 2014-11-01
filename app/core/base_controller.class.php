@@ -11,6 +11,21 @@ abstract class BaseController {
 	public $view;
 
 	/**
+	 * Controllers must implement these methods
+	 */
+	abstract protected function set_view();
+	abstract protected function init();
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		ob_start();
+		$this->set_view();
+		$this->init();
+	}
+
+	/**
 	 * Render
 	 */
 	protected function render() {

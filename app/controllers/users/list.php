@@ -2,7 +2,7 @@
 
 // Controller
 class Controller extends AppController {
-	public function init() {
+	protected function init() {
 
 		// SQL
 		$sql = "
