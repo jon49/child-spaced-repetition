@@ -143,7 +143,7 @@ If you open the `master.php` Template, you will notice a place where it outputs 
 
 Your Controller will have access to the Default View's hierarchy through a variable called `$this->view`. This variable is provided by `AppController`. 
 
-You can send variables from the Controller to the View/Sub Views objects as follows:
+You can send variables from the Controller to the View/Sub View objects as follows:
 
 ```php
 // Pass a varialbe called 'foo' into the Master Template
