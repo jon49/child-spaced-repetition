@@ -211,7 +211,7 @@ class Controller extends AppController {
 
 ## Models
 
-Where Routers, Controllers and Views all work to create the output, Models serve as a middle layer between the Controllers and the Database. Models are saved in `/app/models` and are created as classes that extend the `Model` class:
+Where Routers, Controllers, and Views all work to create the output; Models serve as a middle layer between the Controllers and the Database. Models are saved in `/app/models` and are created as classes that extend the `Model` class:
 
 ```php
 class User extends Model {
