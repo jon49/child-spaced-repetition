@@ -129,19 +129,21 @@ extract($controller->view->vars);
 
 Since controllers are included by the router and not the Auto Loader, the class name doesn't need to match the filename. So naming your contollers `class Controller` is okay. The purpose of the controller is to organize the page-specific code including orchestrating Models and Views.
 
-All controllers should extend some higher level controller, in this case we're extending `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` in this case sets up views and renders the views for you automatically. We'll talk about how controllers work with views later in this document.
+All controllers should extend some higher level controller, in this case we're extending `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` in this case sets up views and renders the views for you automatically. We'll talk about how Controllers work with Views later in this document.
 
 ## Views / Templates
 
-Your application needs a way of organizing HTML templates for reuse. Views exist to organize your HTML templates into a hierarchy and while templates consist of mostly HTML, Views also serve to provide the programming logic for it's respected template. Each View will be associated with just one template.
+Your application needs a way of organizing HTML templates for reuse. Views exist to organize your HTML templates into a hierarchy. While templates mostly consist of HTML, Views also serve to provide the programming logic for it's respected template (each View will be associated with just one template).
 
-Views and Templates will exist under `/app/views` and `/app/templates` respectively. You will notice a Default View and some templates already setup for you. These are meant to be customized depending on your application's needs but serve as starting points to help you learn how Views and Templates work. In this case, the Default View will load the `master.php` Template and will then load the `primary_header.php` Template into the Master Template.
+Views and Templates will exist under `/app/views` and `/app/templates` respectively. You will notice a Default View and some templates already setup for you. These are meant to be customized depending on your application's needs but serve as starting points to help you learn how Views and Templates work. By explpring the Default View, you will notice it associates itself with the `master.php` Template and then it creates Sub Views within itself. This is how the hierarchy is created. When the Default View gets rendered, it will also render all of its Sub Views.
 
-If you open the `master.php` Template, you will notice a place where it outputs the contents of the `primary_header.php` Template. You will also notice were it outputs the contents of the a variable called `$main_content`. The Main Content variable will consist of "page specific content" for each page. Let's explpore how controllers work with views and how to make page specific content in the next section.
+If you open the `master.php` Template, you will notice a place where it outputs the contents of the `primary_header.php` Template. You will also notice were it outputs the contents of the a variable called `$main_content`. The Main Content variable will consist of "page specific content" for each page. Let's explpore how Controllers work with Views and how to make "page specific content" in the next section.
 
 ## Controllers and Views
 
-Your Controller will have access to its View hierarchy through a variable called `$this->view`. This variable is provided by `AppController` is an instance of the Default View hierarchy. You can send variables from the controller to the View object or any of it's Sub View objects as follows:
+Your Controller will have access to the Default View's hierarchy through a variable called `$this->view`. This variable is provided by `AppController`. 
+
+You can send variables from the Controller to the View/Sub Views objects as follows:
 
 ```php
 // Pass a varialbe called 'foo' into the Master Template
@@ -151,9 +153,11 @@ $this->view->foo = 'hello';
 $this->view->primary_header->bar = 'world';
 ```
 
-The View objects are smart and know when you're trying to access a View/Sub View vs when you're trying to make a variable. In the case of `$this->view->foo`, it knows that there isn't a Sub View called `foo` and therefore you're making a new variable. In the case of `$this->view->primary_header->bar `, it knows that `primary_header` is a Sub View of the main View and therefore allows you to pass new variables into that Sub View (like `bar`). Also note that passing variables to `$this->view` will make those variables available in the `master.php` Template since that's how our Default View is organized.
+The View objects are smart and know when you're trying to access a View/Sub View vs when you're trying to make a variable. In this case `$this->view->foo` knows that there isn't a Sub View called `foo` and therefore you're making a new variable. In the case of `$this->view->primary_header->bar `, it knows that `primary_header` is a Sub View of the Default View and therefore allows you to pass new variables into that Sub View like `bar`. 
 
-Besides passing variables into specific Views, you'll also want to pass "page specific content" into the Default View's `master.php` Template. Take note that all output created in your controller will be collected and turned into a variable called `$main_content`.
+Since `$this->view` corresponds directly to the Default View, and the Default View loads the `master.php` Template, passing variables to `$this->view` will make those variables available in the `master.php` Template.
+
+Besides passing variables into specific Views/Sub Views, you should note that all output created in your controller will be collected and turned into a variable called `$main_content` (inside the `master.php` Template)
 
 Let's take a look at that basic setup for a Controller again:
 
@@ -178,7 +182,7 @@ extract($controller->view->vars);
 <h1><?php echo $title; ?></h1>
 ```
 
-Since any output from the controller gets turned into the `$main_content` variable on the `master.php` Template, you can see here that our `$main_content` will consist of an `<h1>` tag. But also notice that in order to pass information from the `init()` method down into the output, we also have to use `$this->view` to make a `$title` variable.
+Since any output from the controller gets turned into the `$main_content` variable on the `master.php` Template, you can see here that our `$main_content` will consist of an `<h1>` tag. But also notice that in order to pass information from the `init()` method of our Controller down into the output, we also have to use `$this->view` as well.
 
 
 
