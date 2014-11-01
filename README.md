@@ -241,14 +241,56 @@ echo $user->first_name; // Outputs "Lindsey"
 
 Notice how we can instantiate a new User object by passing in the User ID. By doing this the Model will perform the nessesary SQL statement to get all the information about User:1. If you used the `database.sql` file to start your database then you'll have a user table already with two users inserted. 
 
-The User Model we created can opperate with no methods to get user information as we just saw. However you should add methods to your models as nessesary for your application. Methods inside of Models should serve to perform operations on the Model data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model
+The User Model we created can opperate with no methods to get user information as we just saw. However you should add methods to your Models as nessesary for your application. Methods inside of Models should serve to perform operations on the Model data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model
 
-### Updating
+#### Updating
+
+To update a record in your database, create a Model for the table (such as the User Model) and then create a method similar to this:
+
+```php
+public function update($input) {
+
+	$sql_values = [
+		'first_name' => $input['first_name'],
+		'last_name' => $input['last_name'],
+		'email' => $input['email'],
+		'password' => $input['password']
+	];
+
+	$sql_values = db::auto_quote($sql_values);
+	db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
+	return new User($this->user_id);
+
+}
+```
+
+Based on previous documentation, you should be familiar with how to use the `db` object to do an UPDATE statement. Notice that this method takes an associative array for `$input`. Each input variable corresponds to a database field. This pattern isn't required but just serves as an example.
+
+Imagine we have an `init()` method of a Controller. Also imagine that this controller receives a form request. This example shows how to use the `update` method we just created:
+
+```php
+...
+public function init() {
+
+	// Validate the $_POST data first
+
+	// Get the User ID from the $_POST
+	$user_id = $_POST['user_id];
+	
+	// Start a new User Object
+	$user = new User($user_id);
+	
+	// Update the User
+	$user = $user->update($_POST);
+}
+...
+```
 
 
 
 
-### Inserting
+
+#### Inserting
 
 
 
