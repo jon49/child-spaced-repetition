@@ -133,6 +133,10 @@ Since controllers are included by the router and not the Auto Loader, the class 
 
 All Controllers should extend some higher level Controller, in this case we're extending `AppController`. This means that your code has a ton of features built into the Controller without you having to do extra work. The `AppController` in this case sets up Views and renders the Views for you automatically. We'll talk about how Controllers work with Views later in this document.
 
+### Ajax Controllers
+
+If you wish to perform an AJAX request, you'll need your application to implement an `AjaxController` instead of an `AppController`. The AJAX controller works almost the same except the `$this-view` will refer to an associative array instead of a View Object. Adding variables to this array will turn into a JSON response when the scripe dies.
+
 ## Views / Templates
 
 Your application needs a way of organizing HTML Templates for reuse. Views exist to organize your HTML Templates into a hierarchy and to provide programming logic for the View's Template. Views are PHP objects and each View corresponds to one Template. The Templates are PHP files but mostly consist of HTML.
