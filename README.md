@@ -24,7 +24,6 @@ $results = db::execute($sql);
 
 To prevent SQL Injection Attacks, variables should always be cleansed before you place them into an SQL statement by doing escaping. In the above example, we didn't escape the $user_id but that's because we are sure the value is equal to `1`. If there's even a small chance that the value you want to pass into your SQL statement contains data that the user could have influenced, then you need to do escaping as follows:
 
-
 ```php
 $user_id = db::escape($_GET['user_id']);
 
@@ -81,28 +80,34 @@ The third argument of `db::update()` allows you to write the SQL's `WHERE` state
 
 ## db::insert_duplicate_key_update(`table`, `values`);
 
+This method will attempt an INSERT statement but if the statement fails due to the key already existing, then the statement turns into an UPDATE statement.
+
 # MVC
-All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). Files must follow a specific naming convention in order to be loaded automatically into your pages. All models, views, and controllers must be classes named with title-case as follows:
+All of your Models, Views, and Controllers will be created in a the `/app` folder (in the respective models, views, and controllers folders). The framework has an Auto Loading feature which means you won't need to manually include classes that exist in the `/app` folder. But in order for it to work files must follow a specific naming convention. Each file should have one class and it's class name needs to be title-case as follows:
 ```php
 // Notice the name of the class UserProduct in title-case
 class UserProduct extends Model {
   ...
 }
 ```
-The name of the file needs to be the same as the class name but with underscore-naming and with .class.php at the end such as: `user_product.class.php` 
-
-## Views
-Views are how your organize your application's hierarchy of HTML templates. Your views will be located under `/app/views` and you will see some views there by default. Feel free to make as many views as you need for your project. The views are PHP files with mostly HTML content and since they're not classes, they do not follow the naming convention we mentioned before. The `main.php` view where you should look first. It is the main view that will hold all other views. You will notice a lot of work done here for you, but feel free to modify as needed. We'll talk more about how to organize views when we talk about controllers
+The filename must match the class name expect it will need underscore-case such as `user_product.class.php`. Note the `.class.php` as it's extension.
 
 ## Routers
-Routes are organized in a file called `/router.php`. Routes controll which URL paths go to which controllers. Open that file for examples which are already in place.
+The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests that are for files that don't exist, to go to the router located at `/router.php`. To create a route, call the `add()` method and pass a URL path followed by the path to the controller. The following example shows how to setup three routes.
 
-## Controllers
-Controllers are the end-points for your application to communicate with clients (for normal page requests and for AJAX requests). Your controllers will be located under `/app/controllers`. You may have noticed there was a route in the router file that looked like this:
 ```php
 Router::add('/', '/app/controllers/home.php');
+Router::add('/users', '/app/controllers/users/list.php');
+Router::add('/users/register', '/app/controllers/users/register/form.php');
 ```
-This router is saying that home page request should go to the `/app/controllers/home.php` controller. Now lets look at that file. The file below isn't the home controller, but it is an example of minimum required of any controller
+
+With these routes, if someone navigates to `www.example.com`, the `home.php` controller will take the request. Likewise if the user visits `www.example.com/users`, the `list.php` controller will take the request.
+
+> Note that in order for the routes to work, we cannot have a real file located at the URL path. For instance we cannot have a real file at `/users`. When there is a conflict between having a real file exist and having a route path, the real file will load and prevent the router from loading entirely.
+
+## Controllers
+Controllers are the end-points for your application's HTTP requests. The Router will be the first point of entry for PHP, but it will soon hand the control over to the Controller depending on which URL was requested. Your controllers will be located under `/app/controllers`. This file shows how a basic controller works:
+
 ```php
 <?php
 
@@ -120,30 +125,43 @@ extract($controller->view->vars);
 ?>
 
 <!-- Page specific HTML goes here -->
-
 ```
-Since you will only use one controller per page request and each controller will get its own file, it's okay to name all of your controllers: `class Controller`. Notice though that this controller extends from `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` also organizes your views for your project. It knows that you want to use the `main.php` view and it also knows that the `primary_header.php` view goes in the `main.php` view. Further, any output that you do in your controller will be placed in the `main.php` view, in the right spot. 
 
-Each controller can have "Page Specific HTML" by simply doing output outside the `<?php ... ?>` markers.
+> Note that you will need an `init()` method in your Controller. This method will be called when the Controller Starts. This method should hold your page-specific code.
 
-You will often need to pass variables from the controller to the views. This is done by doing `$this->view->varname` where `$this` is the controller, `$this->view` is the main view,  and `varname` is the varable name in the view. For instance:
+Since controllers are included by the router and not the Auto Loader, the class name doesn't need to match the filename. So naming your contollers `class Controller` is okay. The purpose of the controller is to organize the page-specific code including orchestrating Models and Views.
+
+All controllers should extend some higher level controller, in this case we're extending `AppController`. This means that your code has a ton of features built into the controller without you having to do extra work. The `AppController` in this case sets up views and renders the views for you automatically. We'll talk about how Controllers work with Views later in this document.
+
+## Views / Templates
+
+Your application needs a way of organizing HTML templates for reuse. Views exist to organize your HTML templates into a hierarchy. While templates mostly consist of HTML, Views also serve to provide the programming logic for it's respected template (each View will be associated with just one template).
+
+Views and Templates will exist under `/app/views` and `/app/templates` respectively. You will notice a Default View and some templates already setup for you. These are meant to be customized depending on your application's needs but serve as starting points to help you learn how Views and Templates work. By explpring the Default View, you will notice it associates itself with the `master.php` Template and then it creates Sub Views within itself. This is how the hierarchy is created. When the Default View gets rendered, it will also render all of its Sub Views.
+
+If you open the `master.php` Template, you will notice a place where it outputs the contents of the `primary_header.php` Template. You will also notice were it outputs the contents of the a variable called `$main_content`. The Main Content variable will consist of "page specific content" for each page. Let's explpore how Controllers work with Views and how to make "page specific content" in the next section.
+
+## Controllers and Views
+
+Your Controller will have access to the Default View's hierarchy through a variable called `$this->view`. This variable is provided by `AppController`. 
+
+You can send variables from the Controller to the View/Sub View objects as follows:
+
 ```php
-$this->view->welcome = 'Welcome to MVC';
-```
-This will pass a variable called `$welcome` to the `main.php` view. 
-```php
-$this->view->primary_header->welcome = 'Welcome Student!';
-```
-This however, will pass a variable called `$welcome` to the `primary_header.php` view. Note that these two variables called `$welcome` do not collide with each other since each view will be in its own scope.
+// Pass a varialbe called 'foo' into the Master Template
+$this->view->foo = 'hello';
 
-With these respective views you would just need to do a php echo for the variable as this sample view implies:
-```php
-<h3><?php echo $welcome; ?></h3>
+// Pass a variable called 'bar' to the Primary Header Template
+$this->view->primary_header->bar = 'world';
 ```
 
-### Page Specific Content
+The View objects are smart and know when you're trying to access a View/Sub View vs when you're trying to make a variable. In this case `$this->view->foo` knows that there isn't a Sub View called `foo` and therefore you're making a new variable. In the case of `$this->view->primary_header->bar `, it knows that `primary_header` is a Sub View of the Default View and therefore allows you to pass new variables into that Sub View like `bar`. 
 
-One extra note: All output from the controller is captured and placed in a varialbe called `$main_content`. You will see this variable being echo'ed in the `main.php` view. Further, if you want to pass variables from the controller to the "Page Specific Output" at the bottom of the controller's page, then you will also need to use `$this->view->...`. For example, if you wanted to pass a variable called $welcome to the "Page Specific Ouput" then the following would serve as a good example:
+Since `$this->view` corresponds directly to the Default View, and the Default View loads the `master.php` Template, passing variables to `$this->view` will make those variables available in the `master.php` Template.
+
+Besides passing variables into specific Views/Sub Views, you should note that all output created in your controller will be collected and turned into a variable called `$main_content` (inside the `master.php` Template)
+
+Let's take a look at that basic setup for a Controller again:
 
 ```php
 <?php
@@ -151,7 +169,9 @@ One extra note: All output from the controller is captured and placed in a varia
 // Controller
 class Controller extends AppController {
 	public function init() {
-		$this->view->welcome = 'Welcome to MVC';
+	
+		// Page code goes here
+		$this->view->title = 'Hello World';
 	}
 }
 $controller = new Controller();
@@ -161,12 +181,123 @@ extract($controller->view->vars);
 
 ?>
 
-<h3><?php echo $welcome; ?></h3>
+<h1><?php echo $title; ?></h1>
 ```
+
+Since any output from the controller gets turned into the `$main_content` variable on the `master.php` Template, you can see here that our `$main_content` will consist of an `<h1>` tag. But also notice that in order to pass information from the `init()` method of our Controller down into the output, we also have to use `$this->view` as well.
+
+## Router to Controller to View
+
+Now that we've talked about these parts in detail, let's review how they all work together.
+
+**First,**  the `/router.php` file takes control of the HTTP request. Let's say the user visited `www.example.com`. Since the router has this line of code, the Home Controller will start up:
+
+```php
+Router::add('/', '/app/controllers/home.php');
+```
+
+**Second,** the Home Controller starts and extends the `AppController`:
+
+```php
+class Controller extends AppController {
+...
+```
+
+**Third,** the `AppController` sets it the View it wants to use, in this case it's the Default View at `default_view.class.php`. This Default View is associated with the `master.php` Template and sets up Sub Views which will be associated with respective Templates.
+
+**Fourth,** the Controller's `init()` method will be called allowing the page-specific code to run inside the `init()`. This code will need to send any output to the Views by using the variable: `$this->view`.
+
+**Fifth,** when the script ends, the Controller is already engineered to call the View's render methods and output the application to the client.
 
 ## Models
 
+Where Routers, Controllers, and Views all work to create the output; Models serve as a middle layer between the Controllers and the Database. Models are saved in `/app/models` and are created as classes that extend the `Model` class:
+
+```php
+class User extends Model {
+}
+```
+
+### Naming
+Models directly correspond to database tables and are required to be named similarly to their respective table. Database tables should be named with all lowercase and underscore's for spaces. Models are the same but with Title-Case and without spaces. For instance a table name of `user_product` would require it's Model to be named `UserProduct`.
+
+The Model will anticipate that the name of the Primary ID on the table is the same as the table name, but with `_id` added. So for instance the `user_product` table should have a Primary ID of `user_product_id`. However this can be easily overriden by providing a custom Primary ID:
+
+```php
+class UserProduct extends Model {
+	protected static $table_id = 'id';
+}
+```
+
+### Usage
+
+Just by merit of extending the `Model` class, your Model is already very powerful. With no methods created whatsoever, we can do this with our User Model we created in the first example:
+
+```php
+$user_id = 1;
+$user = new User($user_id);
+echo $user->first_name; // Outputs "Lindsey"
+```
+
+Notice how we can instantiate a new User object by passing in the User ID. By doing this the Model will perform the nessesary SQL statement to get all the information about User:1. If you used the `database.sql` file to start your database then you'll have a user table already with two users inserted. 
+
+The User Model we created can opperate with no methods to get user information as we just saw. However you should add methods to your Models as nessesary for your application. Methods inside of Models should serve to perform operations on the Model data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model
+
+#### Updating
+
+To update a record in your database, create a Model for the table (such as the User Model) and then create a method similar to this:
+
+```php
+public function update($input) {
+
+	$sql_values = [
+		'first_name' => $input['first_name'],
+		'last_name' => $input['last_name'],
+		'email' => $input['email'],
+		'password' => $input['password']
+	];
+
+	$sql_values = db::auto_quote($sql_values);
+	db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
+	return new User($this->user_id);
+
+}
+```
+
+Based on previous documentation, you should be familiar with how to use the `db` object to do an UPDATE statement. Notice that this method takes an associative array for `$input`. Each input variable corresponds to a database field. This pattern isn't required but just serves as an example.
+
+Imagine we have an `init()` method of a Controller. Also imagine that this controller receives a form request. This example shows how to use the `update` method we just created:
+
+```php
 ...
+public function init() {
+
+	// Validate the $_POST data first
+
+	// Get the User ID from the $_POST
+	$user_id = $_POST['user_id'];
+	
+	// Start a new User Object
+	$user = new User($user_id);
+	
+	// Update the User
+	$user = $user->update($_POST);
+}
+...
+```
+
+
+
+
+
+#### Inserting
+
+
+
+
+
+
+
 
 
 
