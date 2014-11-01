@@ -1,5 +1,8 @@
 <?php
 
+// Dependency
+require_once(ROOT . '/app/core/file_utility.class.php');
+
 /**
  * Class Loader
  */
@@ -23,7 +26,7 @@ class ClassLoader {
 	 * Load Class
 	 */
 	public static function load($class) {
-		if ($file = self::class_file_exists($class)) { include($file); }
+		if ($file = self::class_file_exists($class)) { require_once($file); }
 	}
 
 	/**
@@ -32,7 +35,7 @@ class ClassLoader {
 	private static function class_file_exists($class) {
 		$paths = explode(PATH_SEPARATOR, get_include_path());
 		foreach ($paths AS $path) {
-			$class = self::camelcase_to_underscore($class);
+			$class = FileUtility::camelcase_to_underscore($class);
 			$file = $path . '/' . $class . '.class.php';
 			if (is_file($file)) return $file;
 			
@@ -66,13 +69,6 @@ class ClassLoader {
 
 	}
 
-	/**
-	 * Convert CamelCase to underscore_case
-	 */
-	private static function camelcase_to_underscore($text) {
-		$text[0] = strtolower($text[0]);
-		$func = create_function('$c', 'return "_" . strtolower($c[1]);');
-		return preg_replace_callback('/([A-Z])/', $func, $text);
-	}
+
 
 }

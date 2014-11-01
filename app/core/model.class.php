@@ -36,7 +36,7 @@ abstract class Model {
 	
 	public function get_table() {
 		if (!isset(static::$table)) {
-			return strtolower(camelcase_to_underscore(get_called_class()));
+			return strtolower(FileUtility::camelcase_to_underscore(get_called_class()));
 		} else {
 			return static::$table;
 		}
@@ -44,7 +44,7 @@ abstract class Model {
 
 	public function get_table_id() {
 		if (!isset(static::$table_id)) {
-			return strtolower(camelcase_to_underscore(get_called_class()) . '_id');
+			return strtolower(FileUtility::camelcase_to_underscore(get_called_class()) . '_id');
 		} else {
 			return static::$table_id;
 		}

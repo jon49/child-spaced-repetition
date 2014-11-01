@@ -9,8 +9,8 @@ class AppController extends BaseController {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->view = new DefaultView();
 		ob_start();
+		$this->view = new DefaultView();
 		$this->init();
 	}
 

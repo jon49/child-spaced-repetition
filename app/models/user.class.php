@@ -68,8 +68,8 @@ class User extends Model {
 		// Ensure values are encompased with quote marks
 		$sql_values = db::auto_quote($sql_values);
 
-		// Insert
-		$results = db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
+		// Update
+		db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
 		
 		// Return a new instance of this user as an object
 		return new User($this->user_id);
