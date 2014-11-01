@@ -188,20 +188,24 @@ Since any output from the controller gets turned into the `$main_content` variab
 
 Now that we've talked about these parts in detail, let's review how they all work together.
 
-*First,*  the `/router.php` file takes control of the HTTP request. Let's say the user visited `www.example.com`. Since the router has this line of code, the `home.class.php` Controller will start up
+**First,**  the `/router.php` file takes control of the HTTP request. Let's say the user visited `www.example.com`. Since the router has this line of code, the `home.class.php` Controller will start up
 
 ```php
 Router::add('/', '/app/controllers/home.php');
 ```
 
-*Second,* the Home Controller starts and extends the `AppController`:
+**Second,** the Home Controller starts and extends the `AppController`:
 
 ```php
 class Controller extends AppController {
 ...
 ```
 
-*Third,* the `AppController`
+**Third,** the `AppController` sets it the View it wants to use, in this case it's the `default_view.class.php`. This View Object is associated with the `master.php` Template and sets up Sub Views which will know about their respective Templates
+
+**Fourth,** the Controller's `init()` method will be called allowing the page-specific code to run inside the `init()`. This code will need to send any output to the views by using the variable: `$this->view`
+
+**Fifth,** when the script ends, the Controller is already engineered to call the View's render methods and output the application to the client.
 
 
 
