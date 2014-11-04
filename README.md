@@ -336,7 +336,7 @@ $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 ## NPM for OSX
 Install Homebrew (a similar tool to Ubuntu's apt-get)
 ```sh
-sudo ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 Use Homebrew to install Node
 ```sh
