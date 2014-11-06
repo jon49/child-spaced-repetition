@@ -98,7 +98,7 @@ class UserProduct extends Model {
 The filename must match the class name expect it will need underscore-case such as `user_product.class.php`. Note the `.class.php` as it's extension.
 
 ## Routers
-The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests that are for files that don't exist, to go to the router located at `/router.php`. To create a route, call the `add()` method and pass a URL path followed by the path to the controller. The following example shows how to setup three routes.
+The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests to go to the router located at `/router.php`. This rule excludes any HTTP requests to files/folders that already exist. To create a route, call the `add()` method and pass a URL path followed by the path to the controller. The following example shows how to setup three routes.
 
 ```php
 Router::add('/', '/app/controllers/home.php');
