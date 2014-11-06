@@ -256,7 +256,7 @@ Our Model currently has no methods but is already powerful. However you should a
 
 #### Inserting
 
-Inserting new records into database tables is easy with Models. Just start a new instance of your Model by passing an associative array instead of an ID (Since you don't have the idea of something that doesn't exist yet)
+Inserting new records into database tables is easy with Models. Just start a new instance of your Model by passing an associative array instead of an ID (Since you don't have the ID of something that doesn't exist yet)
 
 ```php
 $user = new User($_POST);
