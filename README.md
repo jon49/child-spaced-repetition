@@ -5,6 +5,7 @@ The bootcamp MVC framework is intended to give the students a simple MVC startin
 Modify the constants in the file `/app/app_settings.php` to reflect your database credentials. Some of the example code provided for you depends on a `user` table existing in that database. You can use the `/database.sql` SQL file to create that table. Note that you can change this table as needed but the examples might depend on the original schema of this table
 
 When you setup your database, be sure to edit the `.gitignore` file to ignore the `/app/app_settings.php` file. You don't want this file to be committed to GitHub for two main reasons:
+
 1. We don't want our database credentials broadcasted on the web in public repos
 2. Even if it were a private repo, we don't want this file to end up on our production server - because we won't be using the same values for database credentials on our production server.
 
