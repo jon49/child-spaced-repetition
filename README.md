@@ -254,6 +254,45 @@ Notice how we can instantiate a new User object by passing in the User ID. By do
 
 Our Model currently has no methods but is already powerful. However you should add methods to your Models as necessary for your application. Methods inside of Models should serve to perform operations on the Model's data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model.
 
+#### Inserting
+
+Inserting new records into database tables is easy with Models. Just start a new instance of your Model by passing an associative array instead of an ID (Since you don't have the idea of something that doesn't exist yet)
+
+```php
+$user = new User($_POST);
+```
+
+You'll also need to create an `insert()` method on your Model for this to work. You'll need to implement the insert method based on your needs. This example shows how an insert method might work for a User Model:
+
+```php
+class User extends Model {
+	public function insert($input) {
+
+		// Note that Server Side validation is not being done here
+		// and should be implemented by you
+
+		// Prepare SQL Values
+		$sql_values = [
+			'user_id' => $input['user_id'],
+			'first_name' => $input['first_name'],
+			'last_name' => $input['last_name']
+		];
+
+		// Ensure values are encompassed with quote marks
+		$sql_values = db::auto_quote($sql_values);
+
+		// Insert
+		$results = db::insert('user', $sql_values);
+		
+		// Return the Insert ID
+		return $results->insert_id;
+
+	}
+}
+```
+
+> Note that another requirement of your insert method is to return the `insert_id` that was just created. This will help the Model get setup.
+
 #### Updating
 
 To update a record in your database, create a Model for the table (such as the User Model) and then create a method similar to this:
@@ -275,48 +314,15 @@ public function update($input) {
 }
 ```
 
-> Note that `$this->user_id` inside the object corresponds to the Model's database ID that you provided when you started the object.
+> Note that `$this->user_id` inside the object corresponds to the Model's database ID that you provided when you started the object. Also notice how this method returns a new instance of the User object. This is because the old one is out-of-date now.
 
-Based on previous documentation, you should be familiar with how to use the `db` object to do an UPDATE statement. Notice that this method takes an associative array for `$input`. Each input variable corresponds to a database field. This pattern for doing an update method isn't required but just serves as an example.
-
-The Controller's `init()` method is where you page logic goes. Imagine a Controller that receives a form request. This example shows the `init()` method of the Controller and how it might use the `update()` method of our Model:
+This is how you might use the `update()` method we just created to update user: 4 with information from our POST variable
 
 ```php
-class Controller extends AppController {
-	public function init() {
-	
-		// Validate the $_POST data first
-	
-		// Get the User ID from the $_POST
-		$user_id = $_POST['user_id'];
-		
-		// Start a new User Object
-		$user = new User($user_id);
-		
-		// Update the User
-		$user = $user->update($_POST);
-	}
-}
+$user = new User(4);
+$user = $user->update($_POST);
 ```
-> Note that our `update()` method returns a new instance of the user we're already working on. This pattern isn't required but might be useful since we are updating the user, which means the `$user` Model on the Controller will be inconsistent with the new database information. Therefore if we start a new version of the User object and return it, our controller will have its `$user` Model up-to-date.
-
-#### Inserting
-
-The logic for inserting is almost the same as it is for updating. But since we can only create Models by passing an already existing ID, it doesn't make sense to start a new user object on a user that doesn't exist yet. Therefore you might prefer to create the `insert()` method as static and use it in the Controller as follows:
-
-```php
-class Controller extends AppController {
-	public function init() {
-	
-		// Validate the $_POST data first
-	
-		// Update the User
-		$user = User::insert($_POST);
-	}
-}
-```
-
-Notice this Controller looks just like our update version but instead of starting a `$user` object, it calls insert statically. Also notice that we can have that method return an instance of the newly created user similarly to how the `update()` method did in the previous example.
+> Remember how our `update()` method returned a new instance of the user?  This allows us to get the new `$user` object after calling the update method here. This pattern isn't required but might be useful since we are updating the user's data and we don't want the original `$user` object to be out-of-date.
 
 <hr>
 
