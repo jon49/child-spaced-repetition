@@ -274,7 +274,6 @@ class User extends Model {
 			'last_name' => $input['last_name']
 		];
 
-
 		$sql_values = db::auto_quote($sql_values);
 		$results = db::insert('user', $sql_values);
 		return $results->insert_id;
@@ -287,7 +286,7 @@ class User extends Model {
 
 #### Updating
 
-Updating works very similarly to inserting, except you'll already have a record (hintz the update). In your Model, create an update method as follows:
+Updating works very similarly to inserting, except you'll already have a record (hints the update). In your Model, create an update method as follows:
 
 ```php
 class User extends Model {
