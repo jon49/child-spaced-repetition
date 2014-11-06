@@ -327,8 +327,9 @@ To use this MVC framework you may want to take advantage of NPM (Node Package Ma
 Install Node
 ```sh
 $ sudo apt-get install nodejs
+$ sudo apt-get install npm
 ```
-Fix Node. With Ubuntu Step 3 might not work until you do this fix. So try Step 3 first, then if it doesn't work, do Step 2 then Step 3
+Fix Node. With Ubuntu you might not be able to do `$ npm install ...` commands until you do this step
 ```sh
 $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 ```
@@ -336,7 +337,7 @@ $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 ## NPM for OSX
 Install Homebrew (a similar tool to Ubuntu's apt-get)
 ```sh
-sudo ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 Use Homebrew to install Node
 ```sh
