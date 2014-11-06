@@ -4,6 +4,11 @@ The bootcamp MVC framework is intended to give the students a simple MVC startin
 # Database Setup.
 Modify the constants in the file `/app/app_settings.php` to reflect your database credentials. Some of the example code provided for you depends on a `user` table existing in that database. You can use the `/database.sql` SQL file to create that table. Note that you can change this table as needed but the examples might depend on the original schema of this table
 
+When you setup your database, be sure to edit the `.gitignore` file to ignore the `/app/app_settings.php` file. You don't want this file to be committed to GitHub for two main reasons:
+
+1. We don't want our database credentials broadcasted on the web in public repos
+2. Even if it were a private repo, we don't want this file to end up on our production server - because we won't be using the same values for database credentials on our production server.
+
 # SQL Statements
 
 The `db` object allows you to pass SQL statements and it returns a [mysqli result](http://php.net/manual/en/class.mysqli-result.php) object as seen below:
@@ -93,7 +98,7 @@ class UserProduct extends Model {
 The filename must match the class name expect it will need underscore-case such as `user_product.class.php`. Note the `.class.php` as it's extension.
 
 ## Routers
-The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests that are for files that don't exist, to go to the router located at `/router.php`. To create a route, call the `add()` method and pass a URL path followed by the path to the controller. The following example shows how to setup three routes.
+The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests to go to the router located at `/router.php`. This rule excludes any HTTP requests to files/folders that already exist. To create a route, call the `add()` method and pass a URL path followed by the path to the controller. The following example shows how to setup three routes.
 
 ```php
 Router::add('/', '/app/controllers/home.php');
@@ -254,69 +259,68 @@ Notice how we can instantiate a new User object by passing in the User ID. By do
 
 Our Model currently has no methods but is already powerful. However you should add methods to your Models as necessary for your application. Methods inside of Models should serve to perform operations on the Model's data. For instance if you want to insert, update, or delete records from the database, you should create a Model that represents a database table and create methods to perform those actions inside the Model.
 
-#### Updating
-
-To update a record in your database, create a Model for the table (such as the User Model) and then create a method similar to this:
-
-```php
-public function update($input) {
-
-	$sql_values = [
-		'first_name' => $input['first_name'],
-		'last_name' => $input['last_name'],
-		'email' => $input['email'],
-		'password' => $input['password']
-	];
-
-	$sql_values = db::auto_quote($sql_values);
-	db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
-	return new User($this->user_id);
-
-}
-```
-
-> Note that `$this->user_id` inside the object corresponds to the Model's database ID that you provided when you started the object.
-
-Based on previous documentation, you should be familiar with how to use the `db` object to do an UPDATE statement. Notice that this method takes an associative array for `$input`. Each input variable corresponds to a database field. This pattern for doing an update method isn't required but just serves as an example.
-
-The Controller's `init()` method is where you page logic goes. Imagine a Controller that receives a form request. This example shows the `init()` method of the Controller and how it might use the `update()` method of our Model:
-
-```php
-class Controller extends AppController {
-	public function init() {
-	
-		// Validate the $_POST data first
-	
-		// Get the User ID from the $_POST
-		$user_id = $_POST['user_id'];
-		
-		// Start a new User Object
-		$user = new User($user_id);
-		
-		// Update the User
-		$user = $user->update($_POST);
-	}
-}
-```
-> Note that our `update()` method returns a new instance of the user we're already working on. This pattern isn't required but might be useful since we are updating the user, which means the `$user` Model on the Controller will be inconsistent with the new database information. Therefore if we start a new version of the User object and return it, our controller will have its `$user` Model up-to-date.
-
 #### Inserting
 
-The logic for inserting is almost the same as it is for updating. But since we can only create Models by passing an already existing ID, it doesn't make sense to start a new user object on a user that doesn't exist yet. Therefore you might prefer to create the `insert()` method as static and use it in the Controller as follows:
+Inserting new records into database tables is easy with Models. Just start a new instance of your Model by passing an associative array instead of an ID (Since you don't have the ID of something that doesn't exist yet)
 
 ```php
-class Controller extends AppController {
-	public function init() {
-	
-		// Validate the $_POST data first
-	
-		// Update the User
-		$user = User::insert($_POST);
+$user = new User($_POST);
+```
+
+You'll also need to create an `insert()` method on your Model for this to work. The inner workings of the insert method depend on your needs, but don't worry about calling this method directly; the constructor of the Model class will call it for you when it sees that you passed in an associative array instead of an ID. This example shows how an insert method might work for a User Model:
+
+```php
+class User extends Model {
+	public function insert($input) {
+
+		$sql_values = [
+			'user_id' => $input['user_id'],
+			'first_name' => $input['first_name'],
+			'last_name' => $input['last_name']
+		];
+
+		$sql_values = db::auto_quote($sql_values);
+		$results = db::insert('user', $sql_values);
+		return $results->insert_id;
+
 	}
 }
 ```
 
-Notice this Controller looks just like our update version but instead of starting a `$user` object, it calls insert statically. Also notice that we can have that method return an instance of the newly created user similarly to how the `update()` method did in the previous example.
+> Note that another requirement of your insert method is to return the `insert_id` that was just created. This will help the Model get setup.
+
+#### Updating
+
+Updating works very similarly to inserting, except you'll already have a record (hints the update). In your Model, create an update method as follows:
+
+```php
+class User extends Model {
+	public function update($input) {
+
+		$sql_values = [
+			'first_name' => $input['first_name'],
+			'last_name' => $input['last_name'],
+			'email' => $input['email'],
+			'password' => $input['password']
+		];
+
+		$sql_values = db::auto_quote($sql_values);
+		db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
+		return new User($this->user_id);
+
+	}
+}
+```
+
+> Note that `$this->user_id` inside the object corresponds to the Model's ID (the one you provided when you started the object). Also notice how this method returns a new instance of the User object. This is because the old one is out-of-date now.
+
+This is how you might use the `update()` method we just created to update user 4 with information from our POST variable:
+
+```php
+$user = new User(4);
+$user = $user->update($_POST);
+```
+> Remember how our `update()` method returned a new instance of the user?  This allows us to get the new `$user` object after calling the update method here. This pattern isn't required but might be useful since we are updating the user's data and we don't want the original `$user` object to be out-of-date.
 
 <hr>
 
@@ -362,7 +366,7 @@ Assuming you installed NPM in the previous steps, you can now install Bower glob
 ```sh
 $ sudo npm install -g bower
 ```
-Where NPM will install Node Modules into a foler, Bower will install Bower Components into a folder called `bower_components`. And just like doing `npm install` will look in the `package.json` for what to install, Bower will look in `bower.json` to see what it needs to install. In this case we will be installing jQuery, Modernizr, and ReptileForms. The command to tell bower to install the tools listed in the bower file is:
+Where NPM will install Node Modules into a folder, Bower will install Bower Components into a folder called `bower_components`. And just like doing `npm install` will look in the `package.json` for what to install, Bower will look in `bower.json` to see what it needs to install. In this case we will be installing jQuery, Modernizr, and ReptileForms. The command to tell bower to install the tools listed in the bower file is:
 ```sh
 $ bower install
 ```
