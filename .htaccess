@@ -6,7 +6,7 @@ Options +FollowSymLinks
 RewriteEngine On
 RewriteBase /
 
-# Redirect all requests to router
+# Redirect all requests to index
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
