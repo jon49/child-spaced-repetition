@@ -262,7 +262,7 @@ Inserting new records into database tables is easy with Models. Just start a new
 $user = new User($_POST);
 ```
 
-You'll also need to create an `insert()` method on your Model for this to work. You'll need to implement the insert method based on your needs. This example shows how an insert method might work for a User Model:
+You'll also need to create an `insert()` method on your Model for this to work. The inner workings of the insert method depend on your needs, but don't worry about calling this method directly; the constructor of the Model class will call it for you when it sees that you passed in an associative array instead of an ID. This example shows how an insert method might work for a User Model:
 
 ```php
 class User extends Model {
