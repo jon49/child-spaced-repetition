@@ -4,6 +4,10 @@ The bootcamp MVC framework is intended to give the students a simple MVC startin
 # Database Setup.
 Modify the constants in the file `/app/app_settings.php` to reflect your database credentials. Some of the example code provided for you depends on a `user` table existing in that database. You can use the `/database.sql` SQL file to create that table. Note that you can change this table as needed but the examples might depend on the original schema of this table
 
+When you setup your database, be sure to edit the `.gitignore` file the `/app/app_settings.php` file is not committed to GitHub. This is for two main reasons:
+1. We don't want our database credentials broadcasted on the web in public repos
+2. Even if it were a private repo, we don't want this file to end up on our production server - because we won't be using the same values for database credentials on our production server.
+
 # SQL Statements
 
 The `db` object allows you to pass SQL statements and it returns a [mysqli result](http://php.net/manual/en/class.mysqli-result.php) object as seen below:
@@ -361,7 +365,7 @@ Assuming you installed NPM in the previous steps, you can now install Bower glob
 ```sh
 $ sudo npm install -g bower
 ```
-Where NPM will install Node Modules into a foler, Bower will install Bower Components into a folder called `bower_components`. And just like doing `npm install` will look in the `package.json` for what to install, Bower will look in `bower.json` to see what it needs to install. In this case we will be installing jQuery, Modernizr, and ReptileForms. The command to tell bower to install the tools listed in the bower file is:
+Where NPM will install Node Modules into a folder, Bower will install Bower Components into a folder called `bower_components`. And just like doing `npm install` will look in the `package.json` for what to install, Bower will look in `bower.json` to see what it needs to install. In this case we will be installing jQuery, Modernizr, and ReptileForms. The command to tell bower to install the tools listed in the bower file is:
 ```sh
 $ bower install
 ```
