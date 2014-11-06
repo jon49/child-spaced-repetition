@@ -268,9 +268,6 @@ You'll also need to create an `insert()` method on your Model for this to work. 
 class User extends Model {
 	public function insert($input) {
 
-		// Note that Server Side validation is not being done here
-		// and should be implemented by you
-
 		// Prepare SQL Values
 		$sql_values = [
 			'user_id' => $input['user_id'],
