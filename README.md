@@ -98,7 +98,7 @@ class UserProduct extends Model {
 The filename must match the class name expect it will need underscore-case such as `user_product.class.php`. Note the `.class.php` as it's extension.
 
 ## Routers
-The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests to go to the router located at `/router.php`. This rule excludes any HTTP requests to files/folders that already exist. To create a route, call the `add()` method and pass a URL path followed by the path to the controller. The following example shows how to setup three routes.
+The purpose of a Router is to capture HTTP requests and route them to Controllers. There is a file on the web root called `.htaccess` which tells all HTTP requests to go to `/index.php`. This rule excludes any HTTP requests to files/folders that already exist. In that file, create a route by calling the `Router::add()` method and pass a URL path followed by the path to the Controller. The following example shows how to setup three routes.
 
 ```php
 Router::add('/', '/app/controllers/home.php');
@@ -106,9 +106,9 @@ Router::add('/users', '/app/controllers/users/list.php');
 Router::add('/users/register', '/app/controllers/users/register/form.php');
 ```
 
-With these routes, if someone navigates to `www.example.com`, the `home.php` controller will take the request. Likewise if the user visits `www.example.com/users`, the `list.php` controller will take the request.
+With these routes, if someone navigates to `www.example.com`, the `home.php` Controller will take the request. Likewise if the user visits `www.example.com/users`, the `list.php` Controller will take the request.
 
-> Note that in order for the routes to work, we cannot have a real file located at the URL path. For instance we cannot have a real file at `/users`. When there is a conflict between having a real file exist and having a route path, the real file will load and prevent the router from loading entirely.
+> Note that in order for the routes to work, we cannot have a real file or folder located at the URL path. For instance we cannot have a real folder at `/users`. When there is a conflict between having a real file exist and having a route path, the real file will take precedence and will load instead of the router's index file.
 
 ## Controllers
 Controllers are the end-points for your application's HTTP requests. The Router will be the first point of entry for PHP, but it will soon hand the control over to the Controller depending on which URL was requested. Your controllers will be located under `/app/controllers`. This file shows how a basic controller works:
