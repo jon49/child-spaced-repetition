@@ -23,7 +23,7 @@ class User extends Model {
 			'datetime_added' => 'NOW()'
 		];
 
-		// Ensure values are encompased with quote marks
+		// Ensure values are encompassed with quote marks
 		$sql_values = db::auto_quote($sql_values, ['datetime_added']);
 
 		// Insert
@@ -50,7 +50,7 @@ class User extends Model {
 			'password' => $input['password']
 		];
 
-		// Ensure values are encompased with quote marks
+		// Ensure values are encompassed with quote marks
 		$sql_values = db::auto_quote($sql_values);
 
 		// Update
