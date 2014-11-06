@@ -8,7 +8,7 @@ class User extends Model {
 	/**
 	 * Insert User
 	 */
-	public function insert($input) {
+	protected function insert($input) {
 
 		// Note that Server Side validation is not being done here
 		// and should be implemented by you

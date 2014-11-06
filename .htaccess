@@ -1,6 +1,8 @@
 # Dissallow hotlinking to folders
-#Options -Indexes
-Options +FollowSymLinks
+Options Indexes
+
+# Allows ModRewrite to work
+Options FollowSymLinks
 
 # Turn on rewrite engine
 RewriteEngine On
