@@ -268,20 +268,15 @@ You'll also need to create an `insert()` method on your Model for this to work. 
 class User extends Model {
 	public function insert($input) {
 
-		// Prepare SQL Values
 		$sql_values = [
 			'user_id' => $input['user_id'],
 			'first_name' => $input['first_name'],
 			'last_name' => $input['last_name']
 		];
 
-		// Ensure values are encompassed with quote marks
-		$sql_values = db::auto_quote($sql_values);
 
-		// Insert
+		$sql_values = db::auto_quote($sql_values);
 		$results = db::insert('user', $sql_values);
-		
-		// Return the Insert ID
 		return $results->insert_id;
 
 	}
@@ -292,28 +287,30 @@ class User extends Model {
 
 #### Updating
 
-To update a record in your database, create a Model for the table (such as the User Model) and then create a method similar to this:
+Updating works very similarly to inserting, except you'll already have a record (hintz the update). In your Model, create an update method as follows:
 
 ```php
-public function update($input) {
+class User extends Model {
+	public function update($input) {
 
-	$sql_values = [
-		'first_name' => $input['first_name'],
-		'last_name' => $input['last_name'],
-		'email' => $input['email'],
-		'password' => $input['password']
-	];
+		$sql_values = [
+			'first_name' => $input['first_name'],
+			'last_name' => $input['last_name'],
+			'email' => $input['email'],
+			'password' => $input['password']
+		];
 
-	$sql_values = db::auto_quote($sql_values);
-	db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
-	return new User($this->user_id);
+		$sql_values = db::auto_quote($sql_values);
+		db::update('user', $sql_values, "WHERE user_id = {$this->user_id}");
+		return new User($this->user_id);
 
+	}
 }
 ```
 
-> Note that `$this->user_id` inside the object corresponds to the Model's database ID that you provided when you started the object. Also notice how this method returns a new instance of the User object. This is because the old one is out-of-date now.
+> Note that `$this->user_id` inside the object corresponds to the Model's ID (the one you provided when you started the object). Also notice how this method returns a new instance of the User object. This is because the old one is out-of-date now.
 
-This is how you might use the `update()` method we just created to update user: 4 with information from our POST variable
+This is how you might use the `update()` method we just created to update user 4 with information from our POST variable:
 
 ```php
 $user = new User(4);
