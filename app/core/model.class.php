@@ -14,6 +14,9 @@ abstract class Model {
 	*****************************************/
 
 	public function __construct($id) {
+		if (is_array($id) && method_exists($this, 'insert')) {
+			$id = $this->insert($id);
+		}
 		$this->model = $this->get_model($id);
 	}
 

@@ -25,6 +25,7 @@ class Router {
 			include(ROOT . $file);
 			exit();
 		} else {
+			echo $path . ' Doesn\'t exist';
 			http_response_code('404');
 			exit();
 		}

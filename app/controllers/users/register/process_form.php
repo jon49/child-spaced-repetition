@@ -6,10 +6,8 @@ class Controller extends AjaxController {
 
 		// Validate First
 
-		
-
 		// Save User
-		$user = User::insert($_POST);
+		$user = new User($_POST);
 
 		// In the case of the Ajax Controller, the view is an array
 		// which can can be accessed as follows. This array will be

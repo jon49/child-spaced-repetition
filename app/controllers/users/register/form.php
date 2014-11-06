@@ -16,7 +16,7 @@ extract($controller->view->vars);
 
 ?>
 
-<form class="reptile-form" action="process_form">
+<form class="reptile-form" action="register/process_form">
 	<input type="text" name="first_name" title="First Name" required>
 	<input type="text" name="last_name" title="Last Name" required>
 	<input type="email" name="email" title="Email" required maxlength="100">
