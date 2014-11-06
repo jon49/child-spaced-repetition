@@ -6,7 +6,7 @@
 abstract class AjaxController extends AppController {
 
 	/**
-	 * Set View: The view for this controller will be an array and will be
+	 * The view for this controller will be an array and will be
 	 * converted to JSON upon render
 	 */
 	protected function set_view() {
