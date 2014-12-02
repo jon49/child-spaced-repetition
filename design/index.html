@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="./bower_components/mermaid/dist/mermaid.full.js"></script>
+  <style>
+  body > * {
+    text-align: center;
+  }
+  body > div {
+    width: 600px;
+    margin: 0 auto;
+  }
+  </style>
+</head>
+<body>
+
+  <h1>Child Spaced-Repetition - Page Flow</h1>
+  <div class="mermaid">
+    graph TD;
+      Home-->Login;
+      Home-->New_User[New User];
+      Home-->About;
+      Home-->FAQ;
+      Login-->pw{Correct<br>Login};
+      New_User-->pw_new_user{Correct<br>email<br>password};
+      pw_new_user-->|no|New_User;
+      pw-->|no|Login;
+      pw-->|yes|logged_in((Logged In));
+      pw_new_user-->|yes|logged_in;
+      logged_in-->App;
+      App-->|Learn|App;
+      App-->Settings;
+      Settings-->|Logout|Home;
+      Settings-->Users[Add Student<br>Edit Student<br>Delete Student];
+      Settings-->Decks[Active Deck<br>Add Deck<br>Rename Deck<br>Remove Deck<br>Edit Deck];
+      Decks-->|Edit Deck|Cards[Add Card<br>Change Card<br>Delete Card];
+      Settings-->App;
+  </div>
+
+  <div>
+    <h1>Home Page</h1>
+    <img src="./images/home.png" alt="">
+    <h1>About Page</h1>
+    <img src="./images/about.png" alt="">
+    <h1>FAQ</h1>
+    <img src="./images/faq.png" alt="">
+    <h1>Log In</h1>
+    <img src="./images/login.png" alt="">
+    <h1>Create an Account</h1>
+    <img src="./images/create_an_account.png" alt="">
+    <a href="https://dribbble.com/shots/1526289-Kid-Cam-App-Icon">
+      <h1>App</h1>
+    </a>
+    <img src="./images/app.png" alt="">
+    <a href="https://dribbble.com/shots/1598890-Analytics-App-Dashboard">
+      <h1>Settings</h1>
+      <img src="./images/settings.png" alt="">
+    </a>
+  </div>
+
+</body>
+</html>

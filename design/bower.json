@@ -1,0 +1,22 @@
+{
+  "name": "page-flow",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jon49/child-spaced-repetition",
+  "authors": [
+    "Jon Nyman <nymanjon@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mermaid": "~0.2.6"
+  },
+  "devDependencies": {
+    "mermaid": "~0.2.9"
+  }
+}

@@ -13,6 +13,7 @@
   "devDependencies": {
     "jquery": "~2.1.1",
     "modernizr": "~2.8.2",
-    "ReptileForms": "*"
+    "ReptileForms": "*",
+    "mermaid": "~0.2.6"
   }
 }

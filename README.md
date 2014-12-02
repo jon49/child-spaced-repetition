@@ -18,15 +18,15 @@ From the single-point login a user will be able to create multiple sub-users (st
 
 #### Decks
 
-Decks will consist of items to memorize. E.g., the deck letters will hold the letters A-Z, which will be shown one at a time.
+Decks will consist of cards to memorize. E.g., the deck letters will hold the letters A-Z, which will be shown one at a time.
 
 A user will be able to choose to study from multiple pre-made decks at the same time or only one at a time. E.g., decks `letters` and `letter sounds` can be chosen at the same time while the deck `colors` could be omitted.
 
-The user will be able to create new decks or delete old decks. The decks will be able to be updated with items.
+The user will be able to create new decks or delete old decks. The decks will be able to be updated with cards.
 
 #### Practice
 
-A practice will consist of covering the items in a deck that have been chosen for the student to practice based on previous practices using the algorithms based off of Anki. Each item is randomly selected and presented to the student, when the student marks the item as passed (in contrast to `do again`) the item will not be shown again until the next interval.
+A practice will consist of covering the cards in a deck that have been chosen for the student to practice based on previous practices using the algorithms based off of Anki. Each card is randomly selected and presented to the student, when the student marks the card as passed (in contrast to `do again`) the card will not be shown again until the next interval.
 
 #### About
 
@@ -40,4 +40,10 @@ A help page will be provided with screen shots to help users know how to use the
 
 Games will be provided at the end of each practice session to encourage completion. Games will be based off the decks used.
 
-Possible games will consist of memory, falling items, etc.
+Possible games will consist of memory, falling cards, etc.
+
+#### Algorithm for Spaced-Interval
+
+Each card will have a due date of when it needs to be reviewed. If the date has passed then it will be queued for that day's review. A maximum number of cards can be in the queue for a single day which can be changed by the user, the default limit will be 50. Cards which have the most recent due date will be take first.
+
+A detailed description of the algorithm to be used is found at this link <http://www.supermemo.com/english/ol/sm2.htm>.
