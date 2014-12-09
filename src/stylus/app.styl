@@ -1,0 +1,38 @@
+@require './reset'
+@require './utils'
+@require './body-header.styl'
+
+@mixin vertical-align
+  position relative
+  top 50%
+  tranform translateY(-50%)
+
+gutter-box =
+  > *
+    display block
+    width (main-half-width - 2 * gutter)
+    margin 0 auto
+
+main-background-color = rgb(65, 84, 99)
+main-color = rgba(0, 0, 0, 0.4)
+.settings
+  width 600px
+  margin-top 2em
+  background-color main-background-color
+  color main-color
+
+  header
+    height 5em
+    background-color gray
+    vertical-align middle
+
+    h1
+      display block
+      position static
+
+button
+  width 100%
+  background-color transparent
+  border 3px solid rgba(0, 0, 0, 0.4)
+  font-weight bold
+  cursor pointer

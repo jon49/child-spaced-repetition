@@ -27,16 +27,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.54212367"
-     inkscape:cx="512.21722"
+     inkscape:zoom="0.69036061"
+     inkscape:cx="513.90975"
      inkscape:cy="360.42658"
      inkscape:current-layer="layer1"
      id="namedview4187"
      showgrid="false"
-     inkscape:window-width="1044"
-     inkscape:window-height="624"
-     inkscape:window-x="434"
-     inkscape:window-y="158"
+     inkscape:window-width="1252"
+     inkscape:window-height="804"
+     inkscape:window-x="317"
+     inkscape:window-y="25"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4189">
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -163,27 +163,9 @@
          id="tspan4839"
          x="136.50023"
          y="672.35101">A</tspan></text>
-    <rect
-       style="fill:#2f2f3f;fill-opacity:0.94117647;stroke:#ffffff;stroke-opacity:1"
-       id="rect4841"
-       width="724.92682"
-       height="84.851486"
-       x="0"
-       y="-1.1229376" />
-    <text
-       xml:space="preserve"
-       style="font-size:64px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#f2f8ff;fill-opacity:1;stroke:none;font-family:Sans"
-       x="271.15582"
-       y="61.59338"
-       id="text4843"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4845"
-         x="271.15582"
-         y="61.59338">Letter</tspan></text>
     <path
        sodipodi:type="arc"
-       style="fill:#f2f8ff;fill-opacity:1;stroke:#f2f8ff;stroke-opacity:1"
+       style="fill:#2f2f3f;fill-opacity:0.94117647000000004;stroke:#2f2f3f;stroke-opacity:0.94117647"
        id="path4847"
        sodipodi:cx="73.783905"
        sodipodi:cy="43.147404"
@@ -191,5 +173,27 @@
        sodipodi:ry="25.824366"
        d="m 101.45287,43.147404 a 27.668964,25.824366 0 1 1 -55.337929,0 27.668964,25.824366 0 1 1 55.337929,0 z"
        transform="translate(-20.29057,-3.6891951)" />
+    <text
+       xml:space="preserve"
+       style="font-size:28px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#2f2f3f;fill-opacity:0.94117647;stroke:none;font-family:Sans"
+       x="23.117027"
+       y="121.2316"
+       id="text3770"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3772"
+         x="23.117027"
+         y="121.2316">Say the letter name</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#2f2f3f;fill-opacity:0.94117647;stroke:none;font-family:Sans"
+       x="326.51862"
+       y="47.493626"
+       id="text3770-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3772-3"
+         x="326.51862"
+         y="47.493626">Sally</tspan></text>
   </g>
 </svg>

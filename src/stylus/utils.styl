@@ -1,0 +1,12 @@
+clearfix =
+  &::after
+    content ''
+    display table
+    clear both
+
+vertical-owl(gutter)
+  > *
+    margin-top 0
+    margin-bottom 0
+  > * + *
+    margin-top gutter

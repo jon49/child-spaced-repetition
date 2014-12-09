@@ -1,0 +1,44 @@
+font-size = 16px
+body-width = (800 / font-size)em
+gutter = 1em
+main-half-width = (body-width / 2 - gutter/2)
+header-height = 5em
+main-height = (650 / font-size)em
+light-text = rgb(230, 222, 211)
+dark-text = rgb(95, 89, 78)
+body-background-color = rgb(56, 66, 75)
+
+body
+  background-color body-background-color 
+
+body > *
+  position relative
+  width body-width
+  margin 0 auto
+
+header 
+  height header-height
+
+  h1
+    h1-font-size = 3em
+    position absolute
+    margin 0
+    font-size h1-font-size
+    font-family 'Indie Flower', cursive
+    left 0
+
+  nav
+    nav-font-size = 1.25em
+    position absolute
+    font-size nav-font-size
+    right 0
+    top 1em
+
+    a
+      display inline-block
+      padding 0.25em
+      text-decoration none
+
+    a:hover
+      color body-background-color 
+      background-color text-color

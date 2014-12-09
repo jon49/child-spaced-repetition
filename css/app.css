@@ -1,0 +1,88 @@
+html {
+  color: #777;
+  font-family: 'Open Sans', Arial;
+  font-size: 16px;
+}
+* {
+  box-sizing: border-box;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+body {
+  min-height: 100%;
+}
+img {
+  display: block;
+}
+a:focus,
+a:active,
+button:focus {
+  outline: 0;
+}
+body {
+  background-color: #38424b;
+}
+body > * {
+  position: relative;
+  width: 50em;
+  margin: 0 auto;
+}
+header {
+  height: 5em;
+}
+header h1 {
+  position: absolute;
+  margin: 0;
+  font-size: 3em;
+  font-family: 'Indie Flower', cursive;
+  left: 0;
+}
+header nav {
+  position: absolute;
+  font-size: 1.25em;
+  right: 0;
+  top: 1em;
+}
+header nav a {
+  display: inline-block;
+  padding: 0.25em;
+  text-decoration: none;
+}
+header nav a:hover {
+  color: #38424b;
+  background-color: #777;
+}
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  tranform: translateY(-50%);
+}
+.settings {
+  width: 600px;
+  margin-top: 2em;
+  background-color: #415463;
+  color: rgba(0,0,0,0.4);
+}
+.settings header {
+  height: 5em;
+  background-color: #808080;
+  vertical-align: middle;
+}
+.settings header h1 {
+  display: block;
+  position: static;
+}
+button {
+  width: 100%;
+  background-color: transparent;
+  border: 3px solid rgba(0,0,0,0.4);
+  font-weight: bold;
+  cursor: pointer;
+}

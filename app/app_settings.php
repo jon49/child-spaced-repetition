@@ -14,4 +14,4 @@ define('LIVE_SITE', FALSE);
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'bootcamp_mvc');
+define('DB_NAME', 'spaced_learning_db');

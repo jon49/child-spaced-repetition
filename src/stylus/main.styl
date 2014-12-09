@@ -1,0 +1,128 @@
+@require './reset'
+@require './utils'
+@require './reptileforms.min'
+@require './body-header.styl'
+@require './info-box.styl'
+
+gutter-box =
+  > *
+    display block
+    width (main-half-width - 2 * gutter)
+    margin 0 auto
+
+main
+
+  height main-height
+  vertical-align middle
+  padding gutter
+
+  .highlighted-text
+    font-family 'Indie Flower', cursive
+    font-size 1.75em
+    text-align center
+
+  .sub-heading
+    width (main-half-width / 2)
+
+  > div:first-child
+    background-color rgb(65, 84, 99)
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width main-half-width
+    color rgba(0, 0, 0, 0.4)
+
+    {gutter-box}
+    vertical-owl(gutter)
+
+    > *
+      height 27%
+
+    article
+      text-align justify
+
+    section
+      color rgba(255, 255, 255, 0.7)
+      font-weight bold
+
+    footer
+      text-align center
+
+    > div
+      height (main-height / 2 - gutter / 2)
+
+  > div:last-child
+    position absolute
+    top 0
+    right 0
+    height 100%
+    width main-half-width
+
+    vertical-owl(gutter)
+
+    > div
+      height (main-height / 2 - gutter / 2)
+
+form-panel-text-color = rgb(95, 89, 78)
+form-panel-text-color-opaque = rgba(95, 89, 78, 0.3)
+form-panel-background-color = rgb(230, 222, 211)
+.form-panel
+  info-box form-panel-text-color form-panel-background-color form-panel-text-color-opaque
+  vertical-owl(gutter * (2/3))
+
+  h1
+    padding-top 0.5em
+
+  label
+    width 5em
+
+  button
+    width 100%
+    background-color transparent
+    border 3px solid form-panel-text-color-opaque
+    font-weight bold
+    cursor pointer
+
+form
+  vertical-owl(gutter / 2)
+
+input
+  text-align center
+
+.field
+  text-align left
+
+.field > *
+  display inline-block
+  text-align left
+
+.short-description
+  width 50%
+  float left
+  font-size 0.75em
+
+  {gutter-box}
+  vertical-owl(gutter / 2)
+
+  *
+    width 100%
+
+  h4
+    white-space nowrap
+    font-size 1.5em
+
+.description-boxes
+  {clearfix}
+
+hightlight-panel-background-color = rgb(236, 77, 81)
+highlight-panel-text-color = rgba(255, 255, 255, 0.7)
+.highlight-panel
+  info-box highlight-panel-text-color hightlight-panel-background-color rgba(255, 255, 255, 0.2)
+  vertical-owl(gutter * (2/3))
+
+  h1
+    padding-top 0.5em
+
+  h1 + p
+    color rgb(107, 34, 35)
