@@ -15,5 +15,8 @@
     "modernizr": "~2.8.2",
     "ReptileForms": "*",
     "mermaid": "~0.2.6"
+  },
+  "dependencies": {
+    "fontawesome": "~4.2.0"
   }
 }

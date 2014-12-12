@@ -14,7 +14,12 @@ $router->addRoute([
 
 // Users
 $router->addRoute([
-  'path' => '/app/{app}',
+  'path' => '/app/{page}',
+  'get'  => ['UserAppController', 'render']
+]);
+
+$router->addRoute([
+  'path' => '/app/{page}/{id}',
   'get'  => ['UserAppController', 'render']
 ]);
 
@@ -36,9 +41,17 @@ $router->addRoute([
 ]);
 
 $router->addRoute([
-  'path' => '/api/students/{id}',
-  'get'  => ['UserAppController', 'getStudent']
+  'path' => '/api/students/{id}/cards',
+  'get'  => ['UserAppController', 'getStudentCards'],
+  'handlers' => [
+    'id' => Zaphpa_Constants::PATTERN_DIGIT
+  ]
 ]);
 
-// Issue Route
-$router->route();
+try {
+  $router->route();
+} catch (Zaphpa_InvalidPathException $ex) {
+  header('Content-Type: application/json;', TRUE, 404);
+  $out = ['error' => 'not found'];
+  die(json_encode($out));
+}

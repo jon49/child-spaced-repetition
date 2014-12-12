@@ -13,7 +13,9 @@ require! <[
 gulp.task 'stylus', ->
   distDest = './css'
   gulp.src ['./src/stylus/main.styl', './src/stylus/app.styl']
-    .pipe gulp-stylus!
+    .pipe gulp-stylus(
+      'include css': true
+    )
     .pipe gulp.dest distDest
 
 gulp.task 'js', ->

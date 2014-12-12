@@ -6,11 +6,11 @@ setting = require('./components/setting');
 m = require('mithril');
 module.exports = function(ctrl){
   var students, result;
-  students = ctrl.students;
-  return result = html5(['/css/app.css'], setting('Students', students().map(function(it){
+  students = ctrl.students() || [];
+  return result = html5(['/css/app.css'], setting('Students', students.map(function(it){
     return m("a", {
       config: m.route,
-      href: "/students/" + it.student_id
-    }, [m('button', it.student_name)]);
+      href: "/app/students/" + it.studentId + "/quiz"
+    }, [m('button', it.studentName)]);
   })));
 };

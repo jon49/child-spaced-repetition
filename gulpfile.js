@@ -10,7 +10,9 @@ vinylSourceStream = require('vinyl-source-stream');
 gulp.task('stylus', function(){
   var distDest;
   distDest = './css';
-  return gulp.src(['./src/stylus/main.styl', './src/stylus/app.styl']).pipe(gulpStylus()).pipe(gulp.dest(distDest));
+  return gulp.src(['./src/stylus/main.styl', './src/stylus/app.styl']).pipe(gulpStylus({
+    'include css': true
+  })).pipe(gulp.dest(distDest));
 });
 gulp.task('js', function(){
   var distDest;

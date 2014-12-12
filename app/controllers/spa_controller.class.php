@@ -19,42 +19,19 @@ class SpaController {
 
   }
 
-  private static function addProtection ($array, $excludeFromClean = []) {
+  public static function sendProtectedJson ($object, $excludeFromClean = []) {
 
-    $result = [];
-
-    if (is_array($array)) {
-      foreach ($array as $key => $value) {
-        if (!in_array($key, $excludeFromClean)) {
-          $result[$key] = xss::protection($value);
-        }
-        else {
-          $result[$key] = $value;
-        }
-      }
-    }
-    else {
-      $result = xss::protection($array);
-    }
-
-    return $result;
+    self::isCleanOutput();
+    $protected = xss::protections($object, $excludeFromClean);
+    echo json_encode(Util::keysToCamelCase($protected));
+    die();
 
   }
 
-  public static function sendJson ($array, $excludeFromClean = []) {
-    $result = [];
-    if (is_array($array)) {
-      $result = self::addProtection($array, $excludeFromClean);
-    }
-    else {
-      while ($row = $array->fetch_assoc()) {
-        $result[] = self::addProtection($row);
-      }
-    }
-
-    echo json_encode($result);
+  public static function sendJson ($array) {
+    self::isCleanOutput();
+    echo json_encode(Util::keysToCamelCase($array));
     die();
-
   }
 
 }

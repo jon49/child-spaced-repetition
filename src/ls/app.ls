@@ -1,8 +1,8 @@
 require! <[
-  ./controllers/student
+  ./controllers/student-quiz
   ./controllers/students
   ./views/student-list
-  ./views/student-view
+  ./views/student-quiz-view
 ]>
 
 require! {
@@ -15,7 +15,7 @@ app = (view, controller) ->
 
 m.route.mode = 'pathname'
 
-m.route document, '/app/students', (
-  '/app/students':     app student-list, students
-  '/app/students/:id': app student-view, student
+m.route document, '/', (
+  '/app/students':  app student-list, students
+  '/app/students/:id/quiz': app student-quiz-view, student-quiz
 )
