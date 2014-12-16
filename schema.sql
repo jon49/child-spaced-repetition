@@ -55,8 +55,9 @@ CREATE TABLE student_card (
   student_id INT UNSIGNED NOT NULL,
   card_id INT UNSIGNED NOT NULL,
   due INT UNSIGNED NOT NULL DEFAULT 0,
-  `interval` INT UNSIGNED NOT NULL DEFAULT 0,
-  easiness_factor DOUBLE NOT NULL DEFAULT 2.5,
+  `interval` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  repetition INT NOT NULL DEFAULT 0,
+  easiness_factor REAL NOT NULL DEFAULT 2.5,
   PRIMARY KEY (student_id, card_id),
   FOREIGN KEY (student_id) REFERENCES student(student_id),
   FOREIGN KEY (card_id) REFERENCES card(card_id)

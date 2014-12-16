@@ -2,27 +2,47 @@
 var m, r, Student, Controller;
 m = require('mithril');
 r = require('ramda');
-Student = require('./../models/student');
+Student = require('../models/student');
 Controller = (function(){
   Controller.displayName = 'Controller';
   var prototype = Controller.prototype, constructor = Controller;
   function Controller(){
+    var self;
+    self = this;
     this.studentId = m.route.param('id');
-    Student.store.cards = Student.cards(this.studentId);
+    this.performance = [];
+    Student.cards(this.studentId).then(function(data){
+      self.cards = data.cards, self.hints = data.hints, self.studentName = data.studentName;
+      self.setContent();
+    });
   }
   prototype.onunload = function(e){
-    return Student.sendStudentResults();
+    return Student.sendStudentResult(this.performance);
   };
-  prototype.nextCard = function(){
-    var ref$, cards, hints, studentName, card, hint, content;
-    ref$ = Student.store.cards(), cards = ref$.cards, hints = ref$.hints, studentName = ref$.studentName;
-    card = cards.shift();
-    hint = r.find(r.propEq('deckId', card.deckId))(hints);
-    return content = {
-      title: studentName,
-      hint: hint ? hint.hint : '',
-      card: card.content
-    };
+  prototype.setContent = function(){
+    var card;
+    switch (false) {
+    case !!this.cards.length:
+      Student.sendStudentResult(this.performance);
+      m.route('/app/students');
+      break;
+    default:
+      card = this.cards.shift();
+      this.content = {
+        title: this.studentName,
+        cardInfo: card,
+        hint: r.find(r.propEq('deckId', card.deckId))(this.hints).hint
+      };
+    }
+  };
+  prototype.nextCard = function(start){
+    var self;
+    self = this;
+    this.performance.push({
+      lapsedTime: Date.now() - start,
+      cardId: self.content.cardInfo.cardId
+    });
+    return this.setContent();
   };
   return Controller;
 }());

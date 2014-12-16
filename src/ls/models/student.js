@@ -2,18 +2,21 @@
 var m, Student;
 m = require('mithril');
 Student = {};
-Student.store = {};
 Student.cards = function(studentId){
   return m.request({
     method: 'GET',
     url: "/api/students/" + studentId + "/cards"
   });
 };
-Student.sendStudentResults = function(){
+Student.sendStudentResult = function(performance){
+  var studentId;
+  studentId = m.route.param('id');
   return m.request({
-    method: 'POST',
-    url: "/api/cards/" + studentId,
-    serialize: Student.store.cards
+    method: 'PUT',
+    url: "/api/students/" + studentId + "/cards",
+    data: {
+      cards: performance
+    }
   });
 };
 module.exports = Student;

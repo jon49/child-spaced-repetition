@@ -6,7 +6,6 @@ quiz = require('./components/quiz');
 m = require('mithril');
 r = require('ramda');
 module.exports = function(ctrl){
-  var content, result;
-  content = ctrl.nextCard();
-  return result = html5(['/css/app.css', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'], quiz(content));
+  var result;
+  return result = html5(['/css/app.css', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'], quiz.call(ctrl, ctrl.content));
 };

@@ -2,6 +2,16 @@
 
 class Util {
 
+  function standardDeviation ($aValues, $bSample = false) {
+    $fMean = array_sum($aValues) / count($aValues);
+    $fVariance = 0.0;
+    foreach ($aValues as $i) {
+        $fVariance += pow($i - $fMean, 2);
+    }
+    $fVariance /= ( $bSample ? count($aValues) - 1 : count($aValues) );
+    return (float) sqrt($fVariance);
+  }
+
   public static function isAssoc ($array) {
     return (bool)count(array_filter(array_keys($array), 'is_string'));
   }
@@ -17,6 +27,9 @@ class Util {
 
   // http://stackoverflow.com/a/1444929/632495
   function transformKeys($transform, &$array) {
+    if (!$array) {
+      return null;
+    }
     foreach (array_keys($array) as $key):
       # Working with references here to avoid copying the value,
       # since you said your data is quite large.
@@ -27,6 +40,9 @@ class Util {
       #  - camelCase to snake_case
       $transformedKey = call_user_func($transform, $key);
       # Work recursively
+      if (is_object($value)) {
+        $value = get_object_vars($value);
+      }
       if (is_array($value)) self::transformKeys($transform, $value);
       # Store with new key
       $array[$transformedKey] = $value;
@@ -75,6 +91,11 @@ class Util {
         array_merge($appliedArgs, func_get_args())
       );
     };
+  }
+
+  public static function putDecodeZaphpa ($key, $req) {
+    $value = '['.key($req->get_var('{"'.$key.'":')).']';
+    return json_decode($value);
   }
 
 }

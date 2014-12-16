@@ -2,7 +2,7 @@
 
 class LoginController {
 
-  public static function login() {
+  public static function login($req) {
 
     $user = (new User())->isValid($_POST);
 

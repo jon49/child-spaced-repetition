@@ -19,7 +19,7 @@ $router->addRoute([
 ]);
 
 $router->addRoute([
-  'path' => '/app/{page}/{id}',
+  'path' => '/app/{page}/{id}/{subpage}',
   'get'  => ['UserAppController', 'render']
 ]);
 
@@ -43,6 +43,7 @@ $router->addRoute([
 $router->addRoute([
   'path' => '/api/students/{id}/cards',
   'get'  => ['UserAppController', 'getStudentCards'],
+  'put' => ['UserAppController', 'updateStudentCards'],
   'handlers' => [
     'id' => Zaphpa_Constants::PATTERN_DIGIT
   ]

@@ -1,16 +1,16 @@
 require! {m: mithril}
 
 Student = {}
-Student.store = {}
 
 Student.cards = (studentId) ->
-  m.request {method: 'GET', url: "/api/students/#{studentId}/cards"}
+  m.request {method: \GET, url: "/api/students/#{studentId}/cards"}
 
-Student.sendStudentResults = ->
+Student.sendStudentResult = (performance) ->
+  studentId = m.route.param(\id)
   m.request (
-    method: 'POST'
-    url: "/api/cards/#{studentId}"
-    serialize: Student.store.cards
+    method: \PUT
+    url: "/api/students/#{studentId}/cards"
+    data: {cards: performance}
   )
 
 module.exports = Student
