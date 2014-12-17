@@ -82,4 +82,33 @@ sql;
 
   }
 
+  public function decks() {
+
+    $getDecksSqlStatement =<<<sql
+      SELECT deck_id, deck_name, active
+      FROM student_deck
+      NATURAL JOIN deck
+      WHERE student_id = {$this->student_id};
+sql;
+
+    return db::execute($getDecksSqlStatement);
+
+  }
+
+  public function toggleDeck($deckId) {
+
+    $cleanedInput = $this->cleanInput(['deck_id'], $deckId);
+
+    $deckUpdate =<<<sql
+      UPDATE student_deck
+      SET active=IF(active, 0, 1)
+      WHERE student_id={$this->student_id}
+      AND deck_id={$cleanedInput['deck_id']};
+sql;
+
+    $result = db::execute($deckUpdate);
+    return $result;
+
+  }
+
 }

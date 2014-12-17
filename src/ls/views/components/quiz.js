@@ -4,9 +4,9 @@ m = require('mithril');
 r = require('ramda');
 module.exports = function(content){
   var result;
-  return result = [m('.cards', [
-    m('header', m('h1', content.title)), m('.hint', content.hint), m('.card', content.cardInfo.content), m('a.next.fa.fa-arrow-circle-o-right', {
+  return result = [m('main.cards', [
+    m('header', m('h1', content.title)), m('.hint', content.hint), m('.card', content.cardInfo.content), m('a.next.fa', {
       onclick: this.nextCard.bind(this, Date.now())
-    })
+    }, 'next')
   ])];
 };

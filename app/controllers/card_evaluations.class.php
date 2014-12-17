@@ -42,7 +42,7 @@ class CardEvaluations {
     $getCard = function ($cardId) {
       $result =
         array_filter($this->testedCards, function ($card) use ($cardId){
-          return $card['card_id'] === $cardId;
+          return $card['card_id'] == $cardId;
         });
         $result = array_values($result)[0];
         return $result;

@@ -16,14 +16,11 @@ Controller = (function(){
       self.setContent();
     });
   }
-  prototype.onunload = function(e){
-    return Student.sendStudentResult(this.performance);
-  };
   prototype.setContent = function(){
     var card;
     switch (false) {
     case !!this.cards.length:
-      Student.sendStudentResult(this.performance);
+      Student.sendStudentResult(this.studentId, this.performance);
       m.route('/app/students');
       break;
     default:
@@ -42,7 +39,7 @@ Controller = (function(){
       lapsedTime: Date.now() - start,
       cardId: self.content.cardInfo.cardId
     });
-    return this.setContent();
+    this.setContent();
   };
   return Controller;
 }());

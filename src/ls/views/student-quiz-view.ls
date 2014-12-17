@@ -1,6 +1,5 @@
 require! <[
   ./components/html5
-  ./components/header
   ./components/quiz
 ]>
 

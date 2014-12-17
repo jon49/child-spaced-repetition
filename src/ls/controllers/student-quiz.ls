@@ -15,13 +15,13 @@ class Controller
         self.setContent!
 
   # record data before window closes
-  onunload: (e) ->
-    Student.sendStudentResult @performance
+  # onunload: (e) ->
+  #   Student.sendStudentResult @performance
 
   setContent: !->
     | !@cards.length =>
       # TODO eventually relay message to user if fail
-      Student.sendStudentResult @performance
+      Student.sendStudentResult @studentId, @performance
       m.route \/app/students
     | _ =>
       card = @cards.shift!
@@ -31,12 +31,13 @@ class Controller
         hint: (r.find r.propEq \deckId card.deckId) @hints .hint
 
   # iterate to next card, if finished, then submit to server
-  nextCard: (start) ->
+  nextCard: (start) !->
     self = @
     @performance.push (
       lapsedTime: Date.now! - start
       cardId: self.content.cardInfo.cardId
     )
     @setContent!
+
 
 module.exports = Controller

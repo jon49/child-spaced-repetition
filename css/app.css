@@ -31,7 +31,7 @@ body {
 }
 body > * {
   position: relative;
-  width: 50em;
+  width: 37.5em;
   margin: 0 auto;
 }
 header {
@@ -64,25 +64,53 @@ header nav a:hover {
   top: 50%;
   tranform: translateY(-50%);
 }
-.settings {
-  width: 600px;
-  margin-top: 2em;
+.settings,
+main.cards {
   background-color: #415463;
-  color: rgba(0,0,0,0.4);
+  text-align: center;
+  color: rgba(255,255,255,0.65);
 }
-.settings header {
-  height: 5em;
-  background-color: #808080;
-  vertical-align: middle;
+.settings header h1,
+main.cards header h1 {
+  position: relative;
 }
-.settings header h1 {
-  display: block;
-  position: static;
+.card {
+  font-size: 20em;
+}
+a.next {
+  position: absolute;
+  cursor: pointer;
+  top: 0.25em;
+  right: 0.5em;
+  font-size: 1.5em;
+}
+a.next::after {
+  content: '\f054';
+  font-size: 0.75em;
+  padding-left: 0.25em;
 }
 button {
-  width: 100%;
+  min-width: 10em;
   background-color: transparent;
-  border: 3px solid rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.5em;
   font-weight: bold;
   cursor: pointer;
+}
+button:focus,
+button:hover {
+  border: 2px solid rgba(255,255,255,0.4);
+}
+button.active {
+  border-color: rgba(255,255,255,0.7);
+  color: #fff;
+  background-color: rgba(255,255,255,0.4);
+}
+#edit {
+  color: #777;
+  text-align: center;
+  background-color: #38424b;
+  font-weight: bold;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 0.5em;
 }

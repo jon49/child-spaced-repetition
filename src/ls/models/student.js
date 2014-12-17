@@ -8,14 +8,27 @@ Student.cards = function(studentId){
     url: "/api/students/" + studentId + "/cards"
   });
 };
-Student.sendStudentResult = function(performance){
-  var studentId;
-  studentId = m.route.param('id');
+Student.sendStudentResult = function(studentId, performance){
   return m.request({
     method: 'PUT',
     url: "/api/students/" + studentId + "/cards",
     data: {
       cards: performance
+    }
+  });
+};
+Student.decks = function(studentId){
+  return m.request({
+    method: 'GET',
+    url: "/api/students/" + studentId + "/decks"
+  });
+};
+Student.toggleDeck = function(studentId, deckId){
+  return m.request({
+    method: 'PUT',
+    url: "/api/students/" + studentId + "/decks",
+    data: {
+      deckId: deckId
     }
   });
 };

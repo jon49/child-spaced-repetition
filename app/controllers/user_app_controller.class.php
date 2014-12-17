@@ -39,8 +39,14 @@ html;
   public function updateStudentCards($req) {
     $student = $this->getStudent($req);
     $putResult = Util::putDecodeZaphpa('cards', $req);
-    $calculatedCards =
-      new CardEvaluations($student, Util::keysToUnderscore($putResult));
+    $cleanedInput = array_map(
+        function ($card) use($student) {
+          return $student->cleanInput(
+            ['card_id', 'lapsed_time'],
+            get_object_vars($card),
+            ['lapsed_time', 'card_id']);
+        }, $putResult);
+    $calculatedCards = new CardEvaluations($student, $cleanedInput);
     $newValues = $calculatedCards->newValues();
     $result = $student->updateCards($newValues);
     if ($result) {
@@ -49,6 +55,20 @@ html;
     else {
       SpaController::sendJson(['error' => $result]);
     }
+  }
+
+  public function getStudentDecks($req) {
+    $student = $this->getStudent($req);
+    SpaController::sendProtectedJson($student->decks());
+  }
+
+  public function toggleStudentDeck ($req) {
+    $student = $this->getStudent($req);
+    $deckId = json_decode(array_keys($req->data)[0]);
+    if ($result = $student->toggleDeck($deckId)) {
+      SpaController::sendJson(['message' => 'success']);
+    }
+    SpaController::sendJson(['error' => $result]);
   }
 
 }

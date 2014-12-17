@@ -8,4 +8,19 @@ User.students = function(){
     url: '/api/students'
   });
 };
+User.changeStudentName = function(studentId, newName){
+  return m.request({
+    method: 'PUT',
+    url: "/api/students/" + studentId,
+    data: {
+      studentName: newName
+    }
+  });
+};
+User.deleteStudent = function(studentId){
+  return m.request({
+    method: 'DELETE',
+    url: "/api/students/" + studentId
+  });
+};
 module.exports = User;

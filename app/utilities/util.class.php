@@ -6,9 +6,9 @@ class Util {
     $fMean = array_sum($aValues) / count($aValues);
     $fVariance = 0.0;
     foreach ($aValues as $i) {
-        $fVariance += pow($i - $fMean, 2);
+      $fVariance += pow($i - $fMean, 2);
     }
-    $fVariance /= ( $bSample ? count($aValues) - 1 : count($aValues) );
+    $fVariance /= ($bSample ? count($aValues) - 1 : count($aValues));
     return (float) sqrt($fVariance);
   }
 
@@ -27,6 +27,9 @@ class Util {
 
   // http://stackoverflow.com/a/1444929/632495
   function transformKeys($transform, &$array) {
+    if (is_object($array)) {
+      $array = get_object_vars($array);
+    }
     if (!$array) {
       return null;
     }

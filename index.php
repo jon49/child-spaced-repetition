@@ -49,6 +49,15 @@ $router->addRoute([
   ]
 ]);
 
+$router->addRoute([
+  'path' => '/api/students/{id}/decks',
+  'get'  => ['UserAppController', 'getStudentDecks'],
+  'put'  => ['UserAppController', 'toggleStudentDeck'],
+  'handlers' => [
+    'id' => Zaphpa_Constants::PATTERN_DIGIT
+  ]
+]);
+
 try {
   $router->route();
 } catch (Zaphpa_InvalidPathException $ex) {

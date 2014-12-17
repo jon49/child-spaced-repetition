@@ -1,3 +1,13 @@
+font-size = 16px
+body-width = (600 / font-size)em
+gutter = 1em
+main-half-width = (body-width / 2 - gutter/2)
+header-height = 5em
+main-height = (650 / font-size)em
+light-text = rgb(230, 222, 211)
+dark-text = rgb(95, 89, 78)
+body-background-color = rgb(56, 66, 75)
+
 @require './reset'
 @require './utils'
 @require './body-header.styl'
@@ -15,24 +25,56 @@ gutter-box =
 
 main-background-color = rgb(65, 84, 99)
 main-color = rgba(0, 0, 0, 0.4)
+
 .settings
-  width 600px
-  margin-top 2em
-  background-color main-background-color
-  color main-color
+  background-color #415463
+  text-align center
+  color rgba(255, 255, 255, 0.65)
+  // {gutter-box}
+  // vertical-owl(gutter)
 
-  header
-    height 5em
-    background-color gray
-    vertical-align middle
+  header h1
+    position relative
 
-    h1
-      display block
-      position static
+main.cards
+  @extend .settings
+
+.card
+  font-size 20em
+
+a
+  &.next
+    position absolute
+    cursor pointer
+    top 0.25em
+    right 0.5em
+    font-size 1.5em
+
+  &.next::after
+    content '\f054'
+    font-size 0.75em
+    padding-left 0.25em
 
 button
-  width 100%
+  min-width 10em
   background-color transparent
-  border 3px solid rgba(0, 0, 0, 0.4)
+  border 1px solid rgba(255, 255, 255, 0.1)
+  padding 0.5em
   font-weight bold
   cursor pointer
+
+  &:focus, &:hover
+    border 2px solid rgba(255, 255, 255, 0.4)
+
+  &.active
+    border-color rgba(255, 255, 255, 0.7)
+    color #fff
+    background-color rgba(255, 255, 255, 0.4)
+
+#edit
+  color #777
+  text-align center
+  background-color body-background-color
+  font-weight bold
+  border 1px solid rgba(255, 255, 255, 0.4)
+  padding 0.5em
