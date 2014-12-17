@@ -13,7 +13,13 @@ Controller = (function(){
     this.performance = [];
     Student.cards(this.studentId).then(function(data){
       self.cards = data.cards, self.hints = data.hints, self.studentName = data.studentName;
-      self.setContent();
+      switch (!self.cards.length) {
+      case true:
+        m.route("/app/students/" + self.studentId + "/decks");
+        break;
+      default:
+        self.setContent();
+      }
     });
   }
   prototype.setContent = function(){

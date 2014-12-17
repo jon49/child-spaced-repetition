@@ -30,11 +30,17 @@ main-color = rgba(0, 0, 0, 0.4)
   background-color #415463
   text-align center
   color rgba(255, 255, 255, 0.65)
-  // {gutter-box}
-  // vertical-owl(gutter)
+  padding 1em
+  margin-bottom 500px
 
   header h1
     position relative
+
+  * + button
+    margin-left 1em
+
+  > div > * + div
+    margin-top 1em
 
 main.cards
   @extend .settings
@@ -64,7 +70,7 @@ button
   cursor pointer
 
   &:focus, &:hover
-    border 2px solid rgba(255, 255, 255, 0.4)
+    outline rgba(255, 255, 255, 0.4) solid 2px
 
   &.active
     border-color rgba(255, 255, 255, 0.7)

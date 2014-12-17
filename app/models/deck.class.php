@@ -2,37 +2,6 @@
 
 class Deck extends CustomModel {
 
-//   public function getCardsById($cardIds) {
-//
-//     $ids = implode(',', $cardIds);
-//     $getCardsByIdSqlStatement =<<<sql
-//       SELECT card_id, repetition, `interval`, easiness_factor
-//       FROM student_card
-//       WHERE card_id IN ($ids)
-//       AND student_id = {$this->student_id};
-// sql;
-//     $result = db::execute($getCardsByIdSqlStatement);
-//     return $result;
-//   }
-
-//   public function updateCards($updatedCards) {
-//
-//     foreach ($updatedCards as $card) {
-//       $updateCardsSqlStatement =<<<sql
-//         UPDATE student_card
-//         SET
-//           due=UNIX_TIMESTAMP(NOW() + INTERVAL {$card['interval']} DAY),
-//           `interval`={$card['interval']},
-//           repetition={$card['repetition']},
-//           easiness_factor={$card['easiness_factor']}
-//         WHERE student_id={$this->student_id}
-//         AND card_id={$card['card_id']};
-// sql;
-//       return db::execute($updateCardsSqlStatement);
-//     }
-//
-//   }
-
   public function delete() {
 
     $removalOfDeck =<<<sql
@@ -55,6 +24,56 @@ sql;
 
     return db::execute($newDeckNameStatement);
 
+  }
+
+  public function cards() {
+
+    $cardListFromDB =<<<sql
+      SELECT card_id, content
+      FROM card
+      WHERE deck_id={$this->deck_id};
+sql;
+
+    return db::execute($cardListFromDB);
+
+  }
+
+  public function createCard($input) {
+    $cleanedInput = $this->cleanInput(['content'], $input);
+    if (is_string($cleanedInput)) return null;
+
+    $newCardSqlStatement =<<<sql
+      INSERT INTO card (deck_id, content)
+      VALUES ({$this->deck_id}, {$cleanedInput['content']});
+sql;
+
+    return db::execute($newCardSqlStatement);
+  }
+
+  public function updateCard($input) {
+    $cleanedInput = $this->cleanInput(['content', 'card_id'], $input);
+    if (is_string($cleanedInput)) return null;
+
+    $updateCard =<<<sql
+      UPDATE card
+      SET content={$cleanedInput['content']}
+      WHERE card_id={$cleanedInput['card_id']}
+      AND deck_id={$this->deck_id};
+sql;
+
+    return db::execute($updateCard);
+  }
+
+  public function deleteCard($input) {
+    $cleanedInput = $this->cleanInput(['card_id'], $input);
+    if (is_string($cleanedInput)) return null;
+
+    $deletionOfCard =<<<sql
+      DELETE FROM card WHERE deck_id={$this->deck_id}
+      AND card_id={$cleanedInput['card_id']};
+sql;
+
+    return db::execute($deletionOfCard);
   }
 
 }

@@ -69,10 +69,20 @@ main.cards {
   background-color: #415463;
   text-align: center;
   color: rgba(255,255,255,0.65);
+  padding: 1em;
+  margin-bottom: 500px;
 }
 .settings header h1,
 main.cards header h1 {
   position: relative;
+}
+.settings * + button,
+main.cards * + button {
+  margin-left: 1em;
+}
+.settings > div > * + div,
+main.cards > div > * + div {
+  margin-top: 1em;
 }
 .card {
   font-size: 20em;
@@ -99,7 +109,7 @@ button {
 }
 button:focus,
 button:hover {
-  border: 2px solid rgba(255,255,255,0.4);
+  outline: rgba(255,255,255,0.4) solid 2px;
 }
 button.active {
   border-color: rgba(255,255,255,0.7);

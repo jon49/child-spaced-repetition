@@ -19,6 +19,11 @@ $router->addRoute([
 ]);
 
 $router->addRoute([
+  'path' => '/app/{page}/{id}',
+  'get'  => ['UserAppController', 'render']
+]);
+
+$router->addRoute([
   'path' => '/app/{page}/{id}/{subpage}',
   'get'  => ['UserAppController', 'render']
 ]);
@@ -75,6 +80,14 @@ $router->addRoute([
   'path'   => '/api/decks/{id}',
   'put'    => ['UserAppController', 'editDeck'],
   'delete' => ['UserAppController', 'deleteDeck']
+]);
+
+$router->addRoute([
+  'path'   => '/api/decks/{id}/cards',
+  'get'    => ['DeckAppController', 'getCardList'],
+  'post'   => ['DeckAppController', 'addCard'],
+  'put'    => ['DeckAppController', 'editCard'],
+  'delete' => ['DeckAppController', 'deleteCard']
 ]);
 
 try {

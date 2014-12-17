@@ -1,8 +1,10 @@
 require! <[
+  ./controllers/cards
   ./controllers/decks
   ./controllers/student-deck
   ./controllers/student-quiz
   ./controllers/students
+  ./views/cards-view
   ./views/decks-view
   ./views/student-deck-view
   ./views/student-list

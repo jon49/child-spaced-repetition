@@ -12,7 +12,9 @@ class Controller
     @performance = []
     Student.cards @studentId .then (data) !->
         {self.cards, self.hints, self.studentName} = data
-        self.setContent!
+        switch !self.cards.length
+        | true => m.route "/app/students/#{self.studentId}/decks"
+        | _ => self.setContent!
 
   # record data before window closes
   # onunload: (e) ->

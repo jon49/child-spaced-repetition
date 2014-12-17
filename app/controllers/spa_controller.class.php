@@ -32,7 +32,8 @@ class SpaController {
 
   public static function sendJson ($array) {
     self::isCleanOutput();
-    echo json_encode(Util::keysToCamelCase($array));
+    $camel = Util::keysToCamelCase($array);
+    echo json_encode($camel);
     die();
   }
 

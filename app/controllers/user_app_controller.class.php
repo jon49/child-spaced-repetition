@@ -27,6 +27,13 @@ html;
   public function getStudentCards($req) {
     $student = $this->getStudent($req);
     $cardData = $student->todaysQuiz();
+    if ($cardData['cards']->num_rows == 0) {
+      SpaController::sendJson([
+        'cards' => [],
+        'hints' => [],
+        'studentName' => $student->student_name
+      ]);
+    }
     $protectedCards = [];
     foreach ($cardData as $key => $value) {
       $protectedCards[$key] = xss::protections($value);
