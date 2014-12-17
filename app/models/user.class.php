@@ -94,4 +94,55 @@ sql;
     return db::execute($studentsSqlStatement);
   }
 
+  public function createStudent($input) {
+
+    $cleanedInput = $this->cleanInput(
+      ['student_name'], $input
+    );
+
+    if (is_string($cleanedInput)) {
+      return null;
+    }
+
+    $newStudentOnDatabase =<<<sql
+      INSERT INTO
+        student (user_id, student_name)
+        VALUES ({$this->user_id}, {$cleanedInput['student_name']});
+sql;
+
+    return db::execute($newStudentOnDatabase);
+
+  }
+
+  public function decks() {
+
+    $decksSqlStatement =<<<sql
+      SELECT deck_id, deck_name
+      FROM deck
+      WHERE user_id = {$this->user_id};
+sql;
+
+    return db::execute($decksSqlStatement);
+  }
+
+  public function createDeck($input) {
+
+    $cleanedInput = $this->cleanInput(
+      ['deck_name'], $input
+    );
+
+    if (is_string($cleanedInput)) {
+      return null;
+    }
+
+    $newDeckOnDatabase =<<<sql
+      INSERT INTO
+        deck (user_id, deck_name)
+        VALUES ({$this->user_id}, {$cleanedInput['deck_name']});
+sql;
+
+    return db::execute($newDeckOnDatabase);
+
+  }
+
 }

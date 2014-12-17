@@ -25,33 +25,33 @@ Controller = (function(){
   prototype.newName = function(studentId){
     var studentIndex, $edit, newName;
     studentIndex = this.studentIndex(studentId);
-    switch ($edit = document.getElementById('edit')) {
+    $edit = document.getElementById('edit');
+    newName = $edit ? $edit.value : '';
+    switch (!!newName) {
     case true:
-      break;
-    case newName = $edit.value:
       User.changeStudentName(studentId, newName);
       this.students[studentIndex].edit = false;
       this.students[studentIndex].studentName = newName;
       break;
-    case _:
+    default:
       User.deleteStudent(studentId);
       this.students.splice(studentIndex, 1);
-      break;
     }
   };
-  prototype.newStudent = function(){
+  prototype.editNewStudent = function(){
     return this.newStudent = true;
   };
   prototype.createStudent = function(){
-    var self, $edit;
+    var self, $edit, studentName;
     self = this;
-    switch ($edit = document.getElementById('edit')) {
-    case true && $edit.value:
-      return User.createStudent({
-        studentName: $edit.value
-      }.then(function(data){
-        return self.students.push(data);
-      }));
+    this.newStudent = false;
+    $edit = document.getElementById('edit');
+    studentName = $edit ? $edit.value : '';
+    switch (!!studentName) {
+    case true:
+      return User.createStudent(studentName).then(function(data){
+        self.students.push(data);
+      });
     }
   };
   return Controller;

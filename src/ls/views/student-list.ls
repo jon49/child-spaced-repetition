@@ -15,18 +15,18 @@ selectStudent = ->
   ]
 
 editStudent = (student, ...cb)->
-  cb_ = cb.1 ? @newName.bind @, student.studentId
+  cb_ = cb.0 ? @newName.bind @, student.studentId
   m \div [
     m 'input#edit[type="text"]', (
       value: student.studentName
       config: (e) !->
-        e.focus!
         e.onkeypress = ->
           | e.keyCode is 13 =>
             cb_
           | _ => #do nothing
+        e.focus!
     )
-    m \button, {onclick: @newName.bind @, student.studentId}, \Submit
+    m \button, {onclick: cb_}, \Submit
   ]
 
 newStudent = ->
@@ -38,7 +38,7 @@ newStudent = ->
   | _ =>
     m \div.new-student [
       m \a, (
-        onclick: @newStudent.bind @
+        onclick: @editNewStudent.bind @
       ), [m \button, 'New Student Name']
     ]
 
@@ -51,5 +51,5 @@ module.exports = (ctrl) ->
         editStudent.call ctrl, it
       | _ =>
         selectStudent.call ctrl, it
-    ).concat newStudent.call @
+    ).concat newStudent.call ctrl
   )

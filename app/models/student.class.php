@@ -111,4 +111,28 @@ sql;
 
   }
 
+  public function delete() {
+
+    $removalOfStudent =<<<sql
+      DELETE FROM student WHERE student_id={$this->student_id};
+sql;
+
+    return db::execute($removalOfStudent);
+
+  }
+
+  public function update($input) {
+    $cleanedInput = $this->cleanInput(['student_name'], $input);
+    if (is_string($cleanedInput)) return null;
+
+    $newStudentNameStatement =<<<sql
+      UPDATE student
+      SET student_name={$cleanedInput['student_name']}
+      WHERE student_id={$this->student_id};
+sql;
+
+    return db::execute($newStudentNameStatement);
+
+  }
+
 }

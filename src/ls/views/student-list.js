@@ -16,23 +16,23 @@ selectStudent = function(it){
 editStudent = function(student){
   var cb, cb_, ref$;
   cb = slice$.call(arguments, 1);
-  cb_ = (ref$ = cb[1]) != null
+  cb_ = (ref$ = cb[0]) != null
     ? ref$
     : this.newName.bind(this, student.studentId);
   return m('div', [
     m('input#edit[type="text"]', {
       value: student.studentName,
       config: function(e){
-        e.focus();
         e.onkeypress = function(){
           switch (false) {
           case e.keyCode !== 13:
             return cb_;
           }
         };
+        e.focus();
       }
     }), m('button', {
-      onclick: this.newName.bind(this, student.studentId)
+      onclick: cb_
     }, 'Submit')
   ]);
 };
@@ -46,7 +46,7 @@ newStudent = function(){
     return editStudent.call(this, newStudent, this.createStudent.bind(this));
   default:
     return m('div.new-student', [m('a', {
-      onclick: this.newStudent.bind(this)
+      onclick: this.editNewStudent.bind(this)
     }, [m('button', 'New Student Name')])]);
   }
 };
@@ -60,5 +60,5 @@ module.exports = function(ctrl){
     default:
       return selectStudent.call(ctrl, it);
     }
-  }).concat(newStudent.call(this))));
+  }).concat(newStudent.call(ctrl))));
 };

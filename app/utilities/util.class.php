@@ -101,5 +101,9 @@ class Util {
     return json_decode($value);
   }
 
+  public static function objectFromZaphpa ($req) {
+    return json_decode(array_keys($req->data)[0]);
+  }
+
 }
 

@@ -21,27 +21,28 @@ class Controller
 
   newName: (studentId) !->
     studentIndex = @studentIndex studentId
-    switch $edit = document.getElementById \edit
+    $edit = document.getElementById \edit
+    newName = if ($edit) then $edit.value else ''
+    switch !!newName
     | true =>
-      | newName = $edit.value =>
-        User.changeStudentName studentId, newName
-        @students[studentIndex].edit = false
-        @students[studentIndex].studentName = newName
-      | _ =>
-        User.deleteStudent studentId
-        @students.splice studentIndex, 1
-    | _ => # do nothing
+      User.changeStudentName studentId, newName
+      @students[studentIndex].edit = false
+      @students[studentIndex].studentName = newName
+    | _ =>
+      User.deleteStudent studentId
+      @students.splice studentIndex, 1
 
-  newStudent: ->
+  editNewStudent: ->
     @newStudent = true
 
   createStudent: ->
     self = @
-    switch $edit = document.getElementById \edit
-    | true and $edit.value =>
-      User.createStudent (
-        studentName: $edit.value
-      ).then (data) ->
+    @newStudent = false
+    $edit = document.getElementById \edit
+    studentName = if $edit then $edit.value else ''
+    switch !!studentName
+    | true =>
+      User.createStudent studentName .then (data) !->
         self.students.push data
     | _ => # do nothing
 

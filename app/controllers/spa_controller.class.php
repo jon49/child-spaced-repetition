@@ -22,8 +22,10 @@ class SpaController {
   public static function sendProtectedJson ($object, $excludeFromClean = []) {
 
     self::isCleanOutput();
+
     $protected = xss::protections($object, $excludeFromClean);
-    echo json_encode(Util::keysToCamelCase($protected));
+    $camel = Util::keysToCamelCase($protected);
+    echo json_encode($camel);
     die();
 
   }

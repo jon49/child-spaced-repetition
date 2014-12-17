@@ -37,7 +37,14 @@ $router->addRoute([
 // API
 $router->addRoute([
   'path' => '/api/students',
-  'get'  => ['UserAppController', 'getStudentList']
+  'get'  => ['UserAppController', 'getStudentList'],
+  'post' => ['UserAppController', 'addStudent']
+]);
+
+$router->addRoute([
+  'path'   => '/api/students/{id}',
+  'put'    => ['UserAppController', 'editStudent'],
+  'delete' => ['UserAppController', 'deleteStudent']
 ]);
 
 $router->addRoute([
@@ -56,6 +63,18 @@ $router->addRoute([
   'handlers' => [
     'id' => Zaphpa_Constants::PATTERN_DIGIT
   ]
+]);
+
+$router->addRoute([
+  'path' => '/api/decks',
+  'get'  => ['UserAppController', 'getDeckList'],
+  'post' => ['UserAppController', 'addDeck']
+]);
+
+$router->addRoute([
+  'path'   => '/api/decks/{id}',
+  'put'    => ['UserAppController', 'editDeck'],
+  'delete' => ['UserAppController', 'deleteDeck']
 ]);
 
 try {

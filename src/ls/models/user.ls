@@ -1,21 +1,53 @@
 require! {m: mithril}
 
-User = {}
+User = (
 
-User.students = ->
-  m.request {method: 'GET', url: '/api/students'}
+  students: ->
+    m.request {method: 'GET', url: '/api/students'}
 
-User.changeStudentName = (studentId, newName) ->
-  m.request (
-    method: \PUT
-    url: "/api/students/#{studentId}"
-    data: {studentName: newName}
-  )
+  changeStudentName: (studentId, newName) ->
+    m.request (
+      method: \PUT
+      url: "/api/students/#{studentId}"
+      data: {studentName: newName}
+    )
 
-User.deleteStudent = (studentId) ->
-  m.request (
-    method: \DELETE
-    url: "/api/students/#{studentId}"
-  )
+  deleteStudent: (studentId) ->
+    m.request (
+      method: \DELETE
+      url: "/api/students/#{studentId}"
+    )
+
+  createStudent: (studentName) ->
+    m.request (
+      method: \POST
+      url: \/api/students
+      data: {studentName: studentName}
+    )
+
+  decks: ->
+    m.request {method: \GET, url: \/api/decks}
+
+  changeDeckName: (deckId, newName) ->
+    m.request (
+      method: \PUT
+      url: "/api/decks/#{deckId}"
+      data: {deckName: newName}
+    )
+
+  deleteDeck: (deckId) ->
+    m.request (
+      method: \DELETE
+      url: "/api/decks/#{deckId}"
+    )
+
+  createDeck: (deckName) ->
+    m.request (
+      method: \POST
+      url: \/api/decks
+      data: {deckName: deckName}
+    )
+)
+
 
 module.exports = User
