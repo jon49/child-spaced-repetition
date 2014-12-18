@@ -86,6 +86,9 @@ main.cards > div > * + div {
 }
 .card {
   font-size: 20em;
+  font-size: 20vw;
+  max-height: 100vw;
+  word-wrap: break-word;
 }
 a.next {
   position: absolute;

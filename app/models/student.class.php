@@ -85,10 +85,11 @@ sql;
   public function decks() {
 
     $getDecksSqlStatement =<<<sql
-      SELECT deck_id, deck_name, active
-      FROM student_deck
-      NATURAL JOIN deck
-      WHERE student_id = {$this->student_id};
+      SELECT deck.deck_id, deck_name, IFNULL(active, 0) AS active
+      FROM deck
+      LEFT OUTER JOIN student_deck
+      ON deck.deck_id=student_deck.deck_id
+      AND student_id={$this->student_id};
 sql;
 
     return db::execute($getDecksSqlStatement);
@@ -97,21 +98,66 @@ sql;
 
   public function toggleDeck($deckId) {
 
-    $cleanedInput = $this->cleanInput(['deck_id'], $deckId);
+    $cleanedInput = $this->cleanInput(['deck_id'], $deckId, ['deck_id']);
 
-    $deckUpdate =<<<sql
-      UPDATE student_deck
-      SET active=IF(active, 0, 1)
-      WHERE student_id={$this->student_id}
-      AND deck_id={$cleanedInput['deck_id']};
+    $activeStatement =<<<sql
+      SELECT active
+      FROM student_deck
+      WHERE deck_id={$cleanedInput['deck_id']}
+      AND student_id={$this->student_id};
 sql;
 
-    $result = db::execute($deckUpdate);
-    return $result;
+    $active = db::execute($activeStatement);
+
+    if ($row = $active->fetch_assoc()) {
+      $update =<<<sql
+        UPDATE student_deck
+        SET active = !active
+        WHERE deck_id={$cleanedInput['deck_id']}
+        AND student_id={$this->student_id};
+sql;
+      return db::execute($update);
+    }
+
+    $newActive =<<<sql
+      INSERT INTO student_deck (deck_id, student_id, active)
+      VALUES ({$cleanedInput['deck_id']}, {$this->student_id}, 0);
+sql;
+
+    db::execute($newActive);
+
+    $deck = new Deck($cleanedInput['deck_id']);
+    $cards = $deck->cards();
+
+    $cardList = '';
+    while ($card = $cards->fetch_assoc()) {
+      $cardList .= '('.$this->student_id.','.$card['card_id'].'),';
+    }
+
+    $cardList = substr($cardList, 0, -1);
+
+    $addCardsToUser =<<<sql
+      INSERT INTO student_card (student_id, card_id)
+      VALUES $cardList;
+sql;
+
+    return db::execute($addCardsToUser);
 
   }
 
   public function delete() {
+
+    $deletionOfStudentDecks =<<<sql
+      DELETE FROM student_deck WHERE student_id={$this->student_id};
+sql;
+
+    db::execute($deletionOfStudentDecks);
+
+    $deletionOfStudentCards =<<<sql
+      DELETE FROM student_card WHERE student_id={$this->student_id};
+sql;
+
+    db::execute($deletionOfStudentCards);
 
     $removalOfStudent =<<<sql
       DELETE FROM student WHERE student_id={$this->student_id};

@@ -7515,7 +7515,10 @@ Deck = {
   deleteCard: function(deckId, cardId){
     return m.request({
       method: 'DELETE',
-      url: "/api/decks/" + deckId + "/cards"
+      url: "/api/decks/" + deckId + "/cards",
+      data: {
+        cardId: cardId
+      }
     });
   },
   createCard: function(deckId, content){

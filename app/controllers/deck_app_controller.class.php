@@ -44,7 +44,7 @@ class DeckAppController {
 
   public function deleteCard($req) {
     $deck = $this->getDeck($req);
-    if ($result = $deck->deleteCard()) {
+    if ($result = $deck->deleteCard(Util::objectFromZaphpa($req))) {
       SpaController::sendJson(['message' => 'success']);
     }
     SpaController::sendJson(

@@ -4,6 +4,12 @@ class Deck extends CustomModel {
 
   public function delete() {
 
+    $removeDeckDependents =<<<sql
+      DELETE FROM student_deck WHERE deck_id={$this->deck_id};
+sql;
+
+    db::execute($removeDeckDependents);
+
     $removalOfDeck =<<<sql
       DELETE FROM deck WHERE deck_id={$this->deck_id};
 sql;

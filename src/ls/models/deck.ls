@@ -16,6 +16,7 @@ Deck = (
     m.request (
       method: \DELETE
       url: "/api/decks/#{deckId}/cards"
+      data: {cardId: cardId}
     )
 
   createCard: (deckId, content) ->
